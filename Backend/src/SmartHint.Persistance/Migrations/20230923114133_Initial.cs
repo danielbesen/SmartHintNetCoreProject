@@ -37,7 +37,7 @@ namespace SmartHint.Persistance.Migrations
                     Gender = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DateOfBirth = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsBlocked = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsBlocked = table.Column<bool>(type: "tinyint(1)", nullable: true),
                     Password = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },

@@ -11,7 +11,7 @@ using SmartHint.Persistance.Context;
 namespace SmartHint.Persistance.Migrations
 {
     [DbContext(typeof(SmartHintContext))]
-    [Migration("20230923075936_Initial")]
+    [Migration("20230923114133_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace SmartHint.Persistance.Migrations
                     b.Property<string>("IdentityDocument")
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("IsBlocked")
+                    b.Property<bool?>("IsBlocked")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")

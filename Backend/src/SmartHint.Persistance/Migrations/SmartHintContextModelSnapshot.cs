@@ -37,7 +37,7 @@ namespace SmartHint.Persistance.Migrations
                     b.Property<string>("IdentityDocument")
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("IsBlocked")
+                    b.Property<bool?>("IsBlocked")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")

@@ -31,9 +31,9 @@ public class CustomerController : ControllerBase
         }
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("filter")]
-    public async Task<IActionResult> GetByFilter(CustomerDto model)
+    public async Task<IActionResult> GetByFilter(CustomerFilterDto model)
     {
         try
         {

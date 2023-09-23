@@ -9,6 +9,7 @@ namespace SmartHint.Application.Helpers
         public SmartHintProfile()
         {
             CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<Customer, CustomerFilterDto>().ReverseMap();
         }
     }
 }

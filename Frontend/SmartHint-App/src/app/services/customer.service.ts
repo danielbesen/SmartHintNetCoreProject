@@ -15,7 +15,9 @@ export class CustomerService {
   }
 
   public getFilteredCustomer(customer: Customer): Observable<Customer[]> {
-    return this.http.get<Customer[]>(`${this.baseUrl}/filter`).pipe(take(1));
+    return this.http
+      .post<Customer[]>(`${this.baseUrl}/filter`, customer)
+      .pipe(take(1));
   }
 
   public getCustomerById(id: number): Observable<Customer> {

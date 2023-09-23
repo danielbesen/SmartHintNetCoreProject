@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -9,24 +10,41 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  public customers: Customer[] = [];
   public blockTitle: string = 'Selecione uma opção';
+  form: FormGroup;
+  @Input() customers: Customer[] = [];
   isCollapsed = true;
   constructor(
     private localeService: BsLocaleService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private fb: FormBuilder
   ) {
     this.localeService.use('pt-br');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      name: [''],
+      email: [''],
+      phone: [''],
+      registerDate: [''],
+      isBlocked: [''],
+    });
+  }
 
-  public applyFilter(customer: Customer): void {
+  public applyFilter(): void {
+    let fm = this.form.value;
+
+    fm.isBlocked =
+      fm.isBlocked === 'Sim' ? true : fm.isBlocked === 'Não' ? false : null;
+
+    fm.registerDate = fm.registerDate || null;
+    const customer: Customer = { ...this.form.value };
     this.customerService.getFilteredCustomer(customer).subscribe(
       (_customers: Customer[]) => {
         this.customers = _customers;
       },
-      (error) => console.log(error)
+      (error) => console.error(error)
     );
   }
 
@@ -34,7 +52,7 @@ export class FilterComponent implements OnInit {
     this.blockTitle = value;
   }
 
-  get bsConfig(): any {
+  public bsConfig(): any {
     return {
       isAnimated: true,
       adaptivePosition: true,

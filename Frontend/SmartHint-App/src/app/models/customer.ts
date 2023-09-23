@@ -9,6 +9,6 @@ export interface Customer {
   stateRegistration: string;
   gender: string;
   dateOfBirth?: Date;
-  isBlocked: boolean;
+  isBlocked?: boolean;
   password: string;
 }

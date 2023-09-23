@@ -108,7 +108,7 @@ namespace SmartHint.Application.Services
             }
         }
 
-        public async Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerDto model)
+        public async Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerFilterDto model)
         {
             try
             {

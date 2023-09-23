@@ -32,16 +32,24 @@ namespace SmartHint.Persistance.Repositories
 
         public async Task<Customer[]> GetFilteredCustomersAsync(Customer model)
         {
-            IQueryable<Customer> query = _context.Customers;
+            try
+            {
+                IQueryable<Customer> query = _context.Customers;
 
-            query = query.AsNoTracking().OrderBy(e => e.Id).Where(e =>
-            (string.IsNullOrEmpty(model.Name) || e.Name.Contains(model.Name)) &&
-            (string.IsNullOrEmpty(model.Email) || e.Email.Contains(model.Email)) &&
-            (string.IsNullOrEmpty(model.Phone) || e.Phone.Contains(model.Phone)) &&
-            (model.RegisterDate == null || e.RegisterDate == model.RegisterDate) &&
-            (e.IsBlocked == model.IsBlocked)
-        );
-            return await query.ToArrayAsync();
+                query = query.AsNoTracking().OrderBy(e => e.Id).Where(e =>
+                (string.IsNullOrEmpty(model.Name) || e.Name.Contains(model.Name)) &&
+                (string.IsNullOrEmpty(model.Email) || e.Email.Contains(model.Email)) &&
+                (string.IsNullOrEmpty(model.Phone) || e.Phone.Contains(model.Phone)) &&
+                (model.RegisterDate == null || e.RegisterDate == model.RegisterDate) &&
+                (e.IsBlocked == null || e.IsBlocked == model.IsBlocked)
+            );
+                return await query.ToArrayAsync();
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception("ERRO AQ MEMO" + ex.Message);
+            }
+
         }
     }
 }

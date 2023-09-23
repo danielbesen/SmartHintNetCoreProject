@@ -19,7 +19,7 @@ namespace SmartHint.Application.Dtos
         public string StateRegistration { get; set; }
         public string Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public bool IsBlocked { get; set; }
+        public bool? IsBlocked { get; set; }
         [Required, MinLength(8), MaxLength(15)]
         public string Password { get; set; }
     }

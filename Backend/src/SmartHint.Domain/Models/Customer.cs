@@ -12,7 +12,7 @@ namespace SmartHint.Domain.Models
         public string StateRegistration { get; set; }
         public string Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public bool IsBlocked { get; set; }
+        public bool? IsBlocked { get; set; }
         public string Password { get; set; }
     }
 }

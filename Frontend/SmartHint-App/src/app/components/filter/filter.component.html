@@ -21,8 +21,7 @@
     >
       <div class="card-body">
         <div class="card rounded shadow-sm p-3">
-          <!-- <form [formGroup]="form"> -->
-          <form>
+          <form [formGroup]="form">
             <div class="p-3">
               <div class="form-row">
                 <div class="form-group col-md-12">
@@ -64,12 +63,17 @@
                     formControlName="registerDate"
                     placeholder="Selecione uma data ou período"
                     bsDatepicker
-                    [bsConfig]="bsConfig"
+                    [bsConfig]="bsConfig()"
                   />
                 </div>
                 <div class="form-group col-md-6">
                   <label>Cliente bloqueado:</label>
                   <div dropdown>
+                    <input
+                      type="hidden"
+                      formControlName="isBlocked"
+                      value="{{ blockTitle }}"
+                    />
                     <button
                       id="button-basic"
                       dropdownToggle
@@ -86,6 +90,13 @@
                       role="menu"
                       aria-labelledby="button-basic"
                     >
+                      <li role="menuitem">
+                        <a
+                          class="dropdown-item"
+                          (click)="changeBlockTitle('Selecione uma opção')"
+                          >Selecione uma opção</a
+                        >
+                      </li>
                       <li role="menuitem">
                         <a
                           class="dropdown-item"
