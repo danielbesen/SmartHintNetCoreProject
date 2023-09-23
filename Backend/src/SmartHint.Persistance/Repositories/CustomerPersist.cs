@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartHint.Domain.Models;
 using SmartHint.Persistance.Context;
+using SmartHint.Persistance.Helpers;
 using SmartHint.Persistance.Interfaces;
 
 namespace SmartHint.Persistance.Repositories
@@ -12,13 +13,13 @@ namespace SmartHint.Persistance.Repositories
         {
             _context = context;
         }
-        public async Task<Customer[]> GetAllCustomersAsync()
+        public async Task<PageList<Customer>> GetAllCustomersAsync(PageParams pageParams)
         {
             IQueryable<Customer> query = _context.Customers;
 
             query = query.AsNoTracking().OrderBy(e => e.Id);
 
-            return await query.ToArrayAsync();
+            return await PageList<Customer>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
 
         public async Task<Customer> GetCustomerByIdAsync(int customerId)
@@ -30,7 +31,7 @@ namespace SmartHint.Persistance.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Customer[]> GetFilteredCustomersAsync(Customer model)
+        public async Task<PageList<Customer>> GetFilteredCustomersAsync(Customer model, PageParams pageParams)
         {
             try
             {
@@ -43,7 +44,7 @@ namespace SmartHint.Persistance.Repositories
                 (model.RegisterDate == null || EF.Functions.DateDiffDay(model.RegisterDate, e.RegisterDate) == 0) &&
                 (model.IsBlocked == null || e.IsBlocked == model.IsBlocked)
             );
-                return await query.ToArrayAsync();
+                return await PageList<Customer>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
             }
             catch (System.Exception ex)
             {

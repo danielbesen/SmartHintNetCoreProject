@@ -2,6 +2,7 @@ using AutoMapper;
 using SmartHint.Application.Dtos;
 using SmartHint.Application.Interfaces;
 using SmartHint.Domain.Models;
+using SmartHint.Persistance.Helpers;
 using SmartHint.Persistance.Interfaces;
 
 namespace SmartHint.Application.Services
@@ -78,13 +79,19 @@ namespace SmartHint.Application.Services
             }
         }
 
-        public async Task<CustomerDto[]> GetAllCustomersAsync()
+        public async Task<PageList<CustomerDto>> GetAllCustomersAsync(PageParams pageParams)
         {
             try
             {
-                var customers = await _customerPersist.GetAllCustomersAsync();
+                var customers = await _customerPersist.GetAllCustomersAsync(pageParams);
                 if (customers == null) return null;
-                var result = _mapper.Map<CustomerDto[]>(customers);
+                var result = _mapper.Map<PageList<CustomerDto>>(customers);
+
+                result.CurrentPage = customers.CurrentPage;
+                result.TotalPages = customers.TotalPages;
+                result.TotalCount = customers.TotalCount;
+                result.PageSize = customers.PageSize;
+
                 return result;
             }
             catch (System.Exception ex)
@@ -108,21 +115,37 @@ namespace SmartHint.Application.Services
             }
         }
 
-        public async Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerFilterDto model)
+        public async Task<PageList<CustomerDto>> GetFilteredCustomersAsync(CustomerFilterDto model, PageParams pageParams)
         {
             try
             {
                 var customerPersistanceModel = _mapper.Map<Customer>(model);
 
-                var customers = await _customerPersist.GetFilteredCustomersAsync(customerPersistanceModel);
+                var customers = await _customerPersist.GetFilteredCustomersAsync(customerPersistanceModel, pageParams);
                 if (customers == null) return null;
-                var result = _mapper.Map<CustomerDto[]>(customers);
+                var result = _mapper.Map<PageList<CustomerDto>>(customers);
+
+                result.CurrentPage = customers.CurrentPage;
+                result.TotalPages = customers.TotalPages;
+                result.TotalCount = customers.TotalCount;
+                result.PageSize = customers.PageSize;
+
                 return result;
             }
             catch (System.Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerFilterDto model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CustomerDto[]> GetAllCustomersAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

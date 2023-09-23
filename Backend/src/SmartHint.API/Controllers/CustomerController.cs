@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartHint.Application.Dtos;
 using SmartHint.Application.Interfaces;
+using SmartHint.Persistance.Helpers;
 
 namespace SmartHint.API.Controllers;
 
@@ -15,11 +16,11 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] PageParams pageParams)
     {
         try
         {
-            var customers = await _customerService.GetAllCustomersAsync();
+            var customers = await _customerService.GetAllCustomersAsync(pageParams);
             if (customers == null) return NoContent();
 
             return Ok(customers);
@@ -33,11 +34,11 @@ public class CustomerController : ControllerBase
 
     [HttpPost]
     [Route("filter")]
-    public async Task<IActionResult> GetByFilter(CustomerFilterDto model)
+    public async Task<IActionResult> GetByFilter(CustFilterPageParamsDto model)
     {
         try
         {
-            var customers = await _customerService.GetFilteredCustomersAsync(model);
+            var customers = await _customerService.GetFilteredCustomersAsync(model.CustomerFilterDto, model.PageParams);
             if (customers == null) return NoContent();
 
             return Ok(customers);

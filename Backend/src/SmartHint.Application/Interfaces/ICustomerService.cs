@@ -1,4 +1,5 @@
 using SmartHint.Application.Dtos;
+using SmartHint.Persistance.Helpers;
 
 namespace SmartHint.Application.Interfaces
 {
@@ -7,8 +8,8 @@ namespace SmartHint.Application.Interfaces
         Task<CustomerDto> AddCustomer(CustomerDto model);
         Task<CustomerDto> UpdateCustomer(int customerId, CustomerDto model);
         Task<bool> DeleteCustomer(int customerId);
-        Task<CustomerDto[]> GetAllCustomersAsync();
+        Task<PageList<CustomerDto>> GetAllCustomersAsync(PageParams pageParams);
         Task<CustomerDto> GetCustomerByIdAsync(int customerId);
-        Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerFilterDto model);
+        Task<PageList<CustomerDto>> GetFilteredCustomersAsync(CustomerFilterDto model, PageParams pageParams);
     }
 }
