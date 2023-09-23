@@ -1,87 +1,131 @@
-<div class="card rounded shadow-sm p-3">
-  <!-- <form [formGroup]="form"> -->
-  <form>
-    <div class="p-3">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label>Nome/Razão Social:</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="name"
-            placeholder="Nome ou Razão Social do Cliente"
-          />
-        </div>
-        <div class="form-group col-md-6">
-          <label>E-mail:</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="email"
-            placeholder="E-mail do Cliente"
-          />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <label>Telefone:</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="phone"
-            placeholder="Telefone do Cliente"
-          />
-        </div>
-        <div class="form-group col-md-4">
-          <label>Cadastrado em:</label>
-          <input
-            type="datetime"
-            class="form-control"
-            formControlName="registerDate"
-            placeholder="Selecione uma data ou período"
-            bsDatepicker
-            [bsConfig]="bsConfig"
-          />
-        </div>
-        <div class="form-group col-md-4">
-          <label>Cliente bloqueado:</label>
-          <div class="btn-group" dropdown>
-            <button
-              id="button-basic"
-              dropdownToggle
-              type="button"
-              class="btn btn-style dropdown-toggle form-control"
-              aria-controls="dropdown-basic"
-            >
-              {{ blockTitle }}<span class="caret"></span>
-            </button>
-            <ul
-              id="dropdown-basic"
-              *dropdownMenu
-              class="dropdown-menu dropdown-style"
-              role="menu"
-              aria-labelledby="button-basic"
-            >
-              <li role="menuitem">
-                <a class="dropdown-item">Sim</a>
-              </li>
-              <li role="menuitem">
-                <a class="dropdown-item">Não</a>
-              </li>
-            </ul>
-          </div>
+<div id="accordion">
+  <div class="card mb-2">
+    <div class="card-header">
+      <a
+        class="d-flex btn btn-filter"
+        routerLink=""
+        (click)="isCollapsed = !isCollapsed"
+        data-toggle="collapse"
+        data-target="#filterArea"
+        aria-controls="filterArea"
+        aria-expanded="false"
+        ><i class="filter-icon fa-solid fa-magnifying-glass"></i>Filtrar</a
+      >
+    </div>
+
+    <div
+      class="collapse"
+      [collapse]="isCollapsed"
+      [isAnimated]="true"
+      id="filterArea"
+    >
+      <div class="card-body">
+        <div class="card rounded shadow-sm p-3">
+          <!-- <form [formGroup]="form"> -->
+          <form>
+            <div class="p-3">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label>Nome/Razão Social:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Nome ou Razão Social do Cliente"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>E-mail:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="email"
+                    placeholder="E-mail do Cliente"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Telefone:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="phone"
+                    placeholder="Telefone do Cliente"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Cadastrado em:</label>
+                  <input
+                    type="datetime"
+                    class="form-control"
+                    formControlName="registerDate"
+                    placeholder="Selecione uma data ou período"
+                    bsDatepicker
+                    [bsConfig]="bsConfig"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Cliente bloqueado:</label>
+                  <div dropdown>
+                    <button
+                      id="button-basic"
+                      dropdownToggle
+                      type="button"
+                      class="btn btn-style dropdown-toggle form-control"
+                      aria-controls="dropdown-basic"
+                    >
+                      {{ blockTitle }}<span class="caret"></span>
+                    </button>
+                    <ul
+                      id="dropdown-basic"
+                      *dropdownMenu
+                      class="dropdown-menu dropdown-style"
+                      role="menu"
+                      aria-labelledby="button-basic"
+                    >
+                      <li role="menuitem">
+                        <a
+                          class="dropdown-item"
+                          (click)="changeBlockTitle('Sim')"
+                          >Sim</a
+                        >
+                      </li>
+                      <li role="menuitem">
+                        <a
+                          class="dropdown-item"
+                          (click)="changeBlockTitle('Não')"
+                          >Não</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="d-flex btn-filter-card">
+                <button class="btn btn-outline-secondary mr-2 border">
+                  Limpar filtros
+                </button>
+                <button
+                  class="btn btn-success"
+                  (click)="applyFilter()"
+                  (click)="isCollapsed = !isCollapsed"
+                  data-toggle="collapse"
+                  data-target="#filterArea"
+                  aria-controls="filterArea"
+                  aria-expanded="false"
+                >
+                  Aplicar Filtros
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <div class="">
-      <div class="d-flex btn-filter-card">
-        <button class="btn btn-outline-secondary mr-2 border">
-          Limpar filtros
-        </button>
-        <button class="btn btn-success" (click)="applyFilter()">
-          Aplicar Filtros
-        </button>
-      </div>
-    </div>
-  </form>
+  </div>
 </div>

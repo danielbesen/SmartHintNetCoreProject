@@ -8,6 +8,7 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 })
 export class FilterComponent implements OnInit {
   public blockTitle: string = 'Selecione uma opção';
+  isCollapsed = true;
   constructor(private localeService: BsLocaleService) {
     this.localeService.use('pt-br');
   }
@@ -15,6 +16,10 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {}
 
   public applyFilter(): void {}
+
+  public changeBlockTitle(value: string): void {
+    this.blockTitle = value;
+  }
 
   get bsConfig(): any {
     return {
