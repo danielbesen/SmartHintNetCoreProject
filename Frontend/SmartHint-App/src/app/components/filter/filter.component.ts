@@ -37,7 +37,6 @@ export class FilterComponent implements OnInit {
   }
 
   public applyFilter(): void {
-    debugger;
     let fm = {
       ...this.form.value,
       isBlocked:
@@ -51,11 +50,15 @@ export class FilterComponent implements OnInit {
     const customer: Customer = { ...fm };
     this.customerService.getFilteredCustomer(customer).subscribe(
       (_customers: Customer[]) => {
-        debugger;
         this.listCustomerComponent.updateData(_customers);
       },
       (error) => console.error(error)
     );
+  }
+
+  public cleanForm(): void {
+    this.form.reset();
+    this.blockTitle = 'Selecione uma opção';
   }
 
   public changeBlockTitle(value: string): void {
