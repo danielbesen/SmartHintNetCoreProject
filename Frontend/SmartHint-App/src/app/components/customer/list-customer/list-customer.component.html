@@ -50,7 +50,13 @@
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
         <td>{{ customer.registerDate }}</td>
-        <td>{{ customer.isBlocked }}</td>
+        <td>
+          <input
+            type="checkbox"
+            [checked]="customer.isBlocked"
+            (change)="updateBlockedCheckbox(customer)"
+          />
+        </td>
         <td>
           <button
             class="btn-xs mr-2 edit-btn-style"

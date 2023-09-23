@@ -13,6 +13,7 @@ export class ListCustomerComponent implements OnInit {
   public customers: Customer[] = [];
   public filteredCustomers: Customer[];
   private customerId: number;
+  selectedRows: number[] = [];
   constructor(
     private router: Router,
     private customerService: CustomerService,
@@ -42,9 +43,7 @@ export class ListCustomerComponent implements OnInit {
     this.router.navigate([`customer/detail/${id}`]);
   }
 
-  selectedRows: number[] = [];
-
-  selectAll(event: Event) {
+  selectAll(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
       this.selectedRows = Array.from(
@@ -57,7 +56,7 @@ export class ListCustomerComponent implements OnInit {
     }
   }
 
-  toggleRow(index: number) {
+  toggleRow(index: number): void {
     if (this.selectedRows.includes(index)) {
       // Row is selected, deselect it
       this.selectedRows = this.selectedRows.filter(
@@ -72,7 +71,7 @@ export class ListCustomerComponent implements OnInit {
     return this.selectedRows.includes(index);
   }
 
-  updateSelectAll() {
+  updateSelectAll(): void {
     const allSelected = this.selectedRows.length === this.customers.length;
     const selectAllCheckbox = document.querySelector(
       '#selectAll'
@@ -80,5 +79,18 @@ export class ListCustomerComponent implements OnInit {
     if (selectAllCheckbox) {
       selectAllCheckbox.checked = allSelected;
     }
+  }
+
+  updateBlockedCheckbox(customer: Customer): void {
+    customer.isBlocked = !customer.isBlocked;
+    this.customerService.put(customer).subscribe(
+      // () => this.toastr.success('Customer saved!', 'Success'),
+      () => {},
+      (error: any) => {
+        console.error(error);
+        // this.toastr.error('Something wrong!');
+      },
+      () => {}
+    );
   }
 }
