@@ -14,6 +14,10 @@ export class CustomerService {
     return this.http.get<Customer[]>(this.baseUrl).pipe(take(1));
   }
 
+  public getFilteredCustomer(customer: Customer): Observable<Customer[]> {
+    return this.http.get<Customer[]>(`${this.baseUrl}/filter`).pipe(take(1));
+  }
+
   public getCustomerById(id: number): Observable<Customer> {
     return this.http.get<Customer>(`${this.baseUrl}/${id}`).pipe(take(1));
   }

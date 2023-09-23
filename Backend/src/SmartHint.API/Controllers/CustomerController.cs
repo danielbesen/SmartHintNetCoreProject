@@ -33,11 +33,11 @@ public class CustomerController : ControllerBase
 
     [HttpGet]
     [Route("filter")]
-    public async Task<IActionResult> GetByFilter(string name, string email, string phone, DateTime registerDate, bool isBlocked)
+    public async Task<IActionResult> GetByFilter(CustomerDto model)
     {
         try
         {
-            var customers = await _customerService.GetFilteredCustomersAsync(name, email, phone, registerDate, isBlocked);
+            var customers = await _customerService.GetFilteredCustomersAsync(model);
             if (customers == null) return NoContent();
 
             return Ok(customers);
@@ -51,7 +51,6 @@ public class CustomerController : ControllerBase
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetByIdAsync(int id)
-
     {
         try
         {

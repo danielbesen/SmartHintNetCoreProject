@@ -30,16 +30,16 @@ namespace SmartHint.Persistance.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<Customer[]> GetFilteredCustomersAsync(string name, string email, string phone, DateTime registerDate, bool isBlocked)
+        public async Task<Customer[]> GetFilteredCustomersAsync(Customer model)
         {
             IQueryable<Customer> query = _context.Customers;
 
             query = query.AsNoTracking().OrderBy(e => e.Id).Where(e =>
-            (string.IsNullOrEmpty(name) || e.Name.Contains(name)) &&
-            (string.IsNullOrEmpty(email) || e.Email.Contains(email)) &&
-            (string.IsNullOrEmpty(phone) || e.Phone.Contains(phone)) &&
-            (registerDate == null || e.RegisterDate == registerDate) &&
-            (e.IsBlocked == isBlocked)
+            (string.IsNullOrEmpty(model.Name) || e.Name.Contains(model.Name)) &&
+            (string.IsNullOrEmpty(model.Email) || e.Email.Contains(model.Email)) &&
+            (string.IsNullOrEmpty(model.Phone) || e.Phone.Contains(model.Phone)) &&
+            (model.RegisterDate == null || e.RegisterDate == model.RegisterDate) &&
+            (e.IsBlocked == model.IsBlocked)
         );
             return await query.ToArrayAsync();
         }

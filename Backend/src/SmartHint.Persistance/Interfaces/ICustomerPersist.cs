@@ -5,7 +5,7 @@ namespace SmartHint.Persistance.Interfaces
     public interface ICustomerPersist
     {
         Task<Customer[]> GetAllCustomersAsync();
-        Task<Customer[]> GetFilteredCustomersAsync(string name, string email, string phone, DateTime registerDate, bool isBlocked);
+        Task<Customer[]> GetFilteredCustomersAsync(Customer model);
         Task<Customer> GetCustomerByIdAsync(int customerId);
     }
 }

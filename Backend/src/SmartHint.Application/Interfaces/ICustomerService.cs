@@ -9,6 +9,6 @@ namespace SmartHint.Application.Interfaces
         Task<bool> DeleteCustomer(int customerId);
         Task<CustomerDto[]> GetAllCustomersAsync();
         Task<CustomerDto> GetCustomerByIdAsync(int customerId);
-        Task<CustomerDto[]> GetFilteredCustomersAsync(string name, string email, string phone, DateTime registerDate, bool isBlocked);
+        Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerDto model);
     }
 }

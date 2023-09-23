@@ -108,11 +108,13 @@ namespace SmartHint.Application.Services
             }
         }
 
-        public async Task<CustomerDto[]> GetFilteredCustomersAsync(string name, string email, string phone, DateTime registerDate, bool isBlocked)
+        public async Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerDto model)
         {
             try
             {
-                var customers = await _customerPersist.GetFilteredCustomersAsync(name, email, phone, registerDate, isBlocked);
+                var customerPersistanceModel = _mapper.Map<Customer>(model);
+
+                var customers = await _customerPersist.GetFilteredCustomersAsync(customerPersistanceModel);
                 if (customers == null) return null;
                 var result = _mapper.Map<CustomerDto[]>(customers);
                 return result;
