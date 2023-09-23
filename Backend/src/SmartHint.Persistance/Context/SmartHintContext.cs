@@ -9,8 +9,6 @@ namespace SmartHint.Persistance.Context
         {
 
         }
-
-        public DbSet<Buyer> Buyers { get; set; }
         public DbSet<Customer> Customers { get; set; }
     }
 }
