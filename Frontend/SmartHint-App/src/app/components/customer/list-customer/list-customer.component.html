@@ -17,6 +17,13 @@
   <table class="table table-striped table-hover">
     <thead class="thead-dark">
       <tr>
+        <th>
+          <input
+            type="checkbox"
+            (change)="selectAll($event)"
+            [checked]="selectedRows.length === customers.length"
+          />
+        </th>
         <th>#</th>
         <th>Nome/Razão Social</th>
         <th>E-mail</th>
@@ -27,7 +34,14 @@
       </tr>
     </thead>
     <tbody *ngIf="customers && customers.length">
-      <tr *ngFor="let customer of filteredCustomers">
+      <tr *ngFor="let customer of customers; let i = index">
+        <td>
+          <input
+            type="checkbox"
+            [checked]="isRowSelected(i)"
+            (change)="toggleRow(i)"
+          />
+        </td>
         <td>{{ customer.id }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
