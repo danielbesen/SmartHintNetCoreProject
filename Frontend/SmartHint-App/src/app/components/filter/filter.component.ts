@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({

@@ -107,5 +107,20 @@ namespace SmartHint.Application.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<CustomerDto[]> GetFilteredCustomersAsync(string name, string email, string phone, DateTime registerDate, bool isBlocked)
+        {
+            try
+            {
+                var customers = await _customerPersist.GetFilteredCustomersAsync(name, email, phone, registerDate, isBlocked);
+                if (customers == null) return null;
+                var result = _mapper.Map<CustomerDto[]>(customers);
+                return result;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

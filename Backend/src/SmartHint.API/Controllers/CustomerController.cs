@@ -31,6 +31,24 @@ public class CustomerController : ControllerBase
         }
     }
 
+    [HttpGet]
+    [Route("filter")]
+    public async Task<IActionResult> GetByFilter(string name, string email, string phone, DateTime registerDate, bool isBlocked)
+    {
+        try
+        {
+            var customers = await _customerService.GetFilteredCustomersAsync(name, email, phone, registerDate, isBlocked);
+            if (customers == null) return NoContent();
+
+            return Ok(customers);
+        }
+        catch (System.Exception ex)
+        {
+            return this.StatusCode(StatusCodes.Status500InternalServerError,
+            $"Get customers by filter error: {ex.Message}");
+        }
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetByIdAsync(int id)
 
