@@ -33,7 +33,7 @@ export class FilterComponent implements OnInit {
       email: new FormControl(null),
       phone: new FormControl(null),
       registerDate: new FormControl(null),
-      isBlocked: new FormControl(null),
+      isBlocked: new FormControl('Selecione uma opção'),
     });
   }
 
@@ -65,7 +65,11 @@ export class FilterComponent implements OnInit {
   }
 
   public cleanFormField(field: string) {
-    this.form.get(field)?.reset();
+    if (field == 'isBlocked') {
+      this.blockTitle = 'Selecione uma opção';
+    } else {
+      this.form.get(field)?.reset();
+    }
     this.applyFilter();
   }
 

@@ -49,83 +49,137 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>E-mail:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="email"
-                    placeholder="E-mail do Cliente"
-                  />
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="email"
+                      placeholder="E-mail do Cliente"
+                    />
+                    <div *ngIf="(f.email.value ?? null) && isFiltering">
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-danger"
+                          (click)="cleanFormField('email')"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group col-md-6">
                   <label>Telefone:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="phone"
-                    placeholder="Telefone do Cliente"
-                  />
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="phone"
+                      placeholder="Telefone do Cliente"
+                    />
+                    <div *ngIf="(f.phone.value ?? null) && isFiltering">
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-danger"
+                          (click)="cleanFormField('phone')"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label>Cadastrado em:</label>
-                  <input
-                    type="datetime"
-                    class="form-control"
-                    formControlName="registerDate"
-                    placeholder="Selecione uma data ou período"
-                    bsDatepicker
-                    [bsConfig]="bsConfig()"
-                  />
+                  <div class="input-group">
+                    <input
+                      type="datetime"
+                      class="form-control"
+                      formControlName="registerDate"
+                      placeholder="Selecione uma data ou período"
+                      bsDatepicker
+                      [bsConfig]="bsConfig()"
+                    />
+                    <div *ngIf="(f.registerDate.value ?? null) && isFiltering">
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-danger"
+                          (click)="cleanFormField('registerDate')"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group col-md-6">
                   <label>Cliente bloqueado:</label>
-                  <input
-                    class="form-control"
-                    type="hidden"
-                    formControlName="isBlocked"
-                    [(ngModel)]="blockTitle"
-                    name="isBlocked"
-                  />
-                  <div dropdown>
-                    <button
-                      id="button-basic"
-                      dropdownToggle
-                      type="button"
-                      class="btn btn-style dropdown-toggle form-control"
-                      aria-controls="dropdown-basic"
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      type="hidden"
+                      formControlName="isBlocked"
+                      [(ngModel)]="blockTitle"
+                      name="isBlocked"
+                    />
+                    <div dropdown>
+                      <button
+                        id="button-basic"
+                        dropdownToggle
+                        type="button"
+                        class="btn btn-style dropdown-toggle form-control"
+                        aria-controls="dropdown-basic"
+                      >
+                        {{ blockTitle }}<span class="caret"></span>
+                      </button>
+                      <ul
+                        id="dropdown-basic"
+                        *dropdownMenu
+                        class="dropdown-menu dropdown-style"
+                        role="menu"
+                        aria-labelledby="button-basic"
+                      >
+                        <li role="menuitem">
+                          <a
+                            class="dropdown-item"
+                            (click)="changeBlockTitle('Selecione uma opção')"
+                            >Selecione uma opção</a
+                          >
+                        </li>
+                        <li role="menuitem">
+                          <a
+                            class="dropdown-item"
+                            (click)="changeBlockTitle('Sim')"
+                            >Sim</a
+                          >
+                        </li>
+                        <li role="menuitem">
+                          <a
+                            class="dropdown-item"
+                            (click)="changeBlockTitle('Não')"
+                            >Não</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      *ngIf="
+                        f.isBlocked.value !== null &&
+                        f.isBlocked.value !== 'Selecione uma opção' &&
+                        isFiltering
+                      "
                     >
-                      {{ blockTitle }}<span class="caret"></span>
-                    </button>
-                    <ul
-                      id="dropdown-basic"
-                      *dropdownMenu
-                      class="dropdown-menu dropdown-style"
-                      role="menu"
-                      aria-labelledby="button-basic"
-                    >
-                      <li role="menuitem">
-                        <a
-                          class="dropdown-item"
-                          (click)="changeBlockTitle('Selecione uma opção')"
-                          >Selecione uma opção</a
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-danger"
+                          (click)="cleanFormField('isBlocked')"
                         >
-                      </li>
-                      <li role="menuitem">
-                        <a
-                          class="dropdown-item"
-                          (click)="changeBlockTitle('Sim')"
-                          >Sim</a
-                        >
-                      </li>
-                      <li role="menuitem">
-                        <a
-                          class="dropdown-item"
-                          (click)="changeBlockTitle('Não')"
-                          >Não</a
-                        >
-                      </li>
-                    </ul>
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
