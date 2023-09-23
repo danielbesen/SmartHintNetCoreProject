@@ -5,14 +5,13 @@ using SmartHint.Application.Interfaces;
 namespace SmartHint.API.Controllers;
 
 [ApiController]
-[Route("[api/controller]")]
+[Route("api/[controller]")]
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _customerService;
     public CustomerController(ICustomerService customerService)
     {
         _customerService = customerService;
-
     }
 
     [HttpGet]
