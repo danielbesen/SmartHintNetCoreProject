@@ -4,6 +4,9 @@ import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { DataService } from 'src/app/services/data.service';
 import { DatePipe } from '@angular/common';
+import { PaginatedResult, Pagination } from 'src/app/models/pagination';
+import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-list-customer',
@@ -15,6 +18,7 @@ export class ListCustomerComponent implements OnInit {
   public filteredCustomers: Customer[];
   private customerId: number;
   selectedRows: number[] = [];
+  public pagination: Pagination;
   constructor(
     private router: Router,
     private customerService: CustomerService,
@@ -23,6 +27,11 @@ export class ListCustomerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.pagination = {
+      currentPage: 1,
+      itemsPerPage: 20,
+      totalItems: 1,
+    } as Pagination;
     this.getCustomers();
   }
 
@@ -32,13 +41,16 @@ export class ListCustomerComponent implements OnInit {
   }
 
   public getCustomers(): void {
-    this.customerService.getCustomer().subscribe(
-      (_customers: Customer[]) => {
-        this.customers = _customers;
-        this.filteredCustomers = _customers;
-      },
-      (error) => console.log(error)
-    );
+    this.customerService
+      .getCustomer(this.pagination.currentPage, this.pagination.itemsPerPage)
+      .subscribe(
+        (response: PaginatedResult<Customer[]>) => {
+          this.customers = response.result;
+          this.filteredCustomers = response.result;
+          this.pagination = response.pagination;
+        },
+        (error) => console.log(error)
+      );
   }
 
   detailCustomer(id: number): void {
@@ -94,5 +106,11 @@ export class ListCustomerComponent implements OnInit {
       },
       () => {}
     );
+  }
+
+  public pageChanged(event): void {
+    debugger;
+    this.pagination.currentPage = event.page;
+    this.getCustomers();
   }
 }
