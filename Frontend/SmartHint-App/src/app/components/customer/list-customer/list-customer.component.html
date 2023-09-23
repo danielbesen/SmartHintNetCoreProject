@@ -24,7 +24,7 @@
           <input
             type="checkbox"
             (change)="selectAll($event)"
-            [checked]="selectedRows.length === customers.length"
+            [checked]="selectedRows?.length === filteredCustomers?.length"
           />
         </th>
         <th>#</th>
@@ -36,8 +36,8 @@
         <th>Ações</th>
       </tr>
     </thead>
-    <tbody *ngIf="customers && customers.length">
-      <tr *ngFor="let customer of customers; let i = index">
+    <tbody *ngIf="filteredCustomers && filteredCustomers.length">
+      <tr *ngFor="let customer of filteredCustomers; let i = index">
         <td>
           <input
             type="checkbox"
@@ -61,7 +61,7 @@
         </td>
       </tr>
     </tbody>
-    <tfoot *ngIf="!customers">
+    <tfoot *ngIf="!filteredCustomers">
       <tr>
         <td colspan="8" class="center">
           <h4>Nenhum comprador encontrado.</h4>

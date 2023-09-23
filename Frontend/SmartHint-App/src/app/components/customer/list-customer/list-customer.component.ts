@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-list-customer',
@@ -10,22 +11,28 @@ import { CustomerService } from 'src/app/services/customer.service';
 })
 export class ListCustomerComponent implements OnInit {
   public customers: Customer[] = [];
-  public filteredCustomers: Customer[] = [];
-  private _listFilter: string = '';
+  public filteredCustomers: Customer[];
   private customerId: number;
   constructor(
     private router: Router,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
     this.getCustomers();
   }
 
+  public updateData(data: Customer[]): void {
+    console.log(data);
+    this.filteredCustomers = data;
+  }
+
   public getCustomers(): void {
     this.customerService.getCustomer().subscribe(
       (_customers: Customer[]) => {
         this.customers = _customers;
+        this.filteredCustomers = _customers;
       },
       (error) => console.log(error)
     );

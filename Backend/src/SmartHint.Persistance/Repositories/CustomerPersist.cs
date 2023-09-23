@@ -40,8 +40,8 @@ namespace SmartHint.Persistance.Repositories
                 (string.IsNullOrEmpty(model.Name) || e.Name.Contains(model.Name)) &&
                 (string.IsNullOrEmpty(model.Email) || e.Email.Contains(model.Email)) &&
                 (string.IsNullOrEmpty(model.Phone) || e.Phone.Contains(model.Phone)) &&
-                (model.RegisterDate == null || e.RegisterDate == model.RegisterDate) &&
-                (e.IsBlocked == null || e.IsBlocked == model.IsBlocked)
+                (model.RegisterDate == null || EF.Functions.DateDiffDay(model.RegisterDate, e.RegisterDate) == 0) &&
+                (model.IsBlocked == null || e.IsBlocked == model.IsBlocked)
             );
                 return await query.ToArrayAsync();
             }

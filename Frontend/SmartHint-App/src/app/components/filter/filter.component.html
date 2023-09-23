@@ -68,12 +68,14 @@
                 </div>
                 <div class="form-group col-md-6">
                   <label>Cliente bloqueado:</label>
+                  <input
+                    class="form-control"
+                    type="hidden"
+                    formControlName="isBlocked"
+                    [(ngModel)]="blockTitle"
+                    name="isBlocked"
+                  />
                   <div dropdown>
-                    <input
-                      type="hidden"
-                      formControlName="isBlocked"
-                      value="{{ blockTitle }}"
-                    />
                     <button
                       id="button-basic"
                       dropdownToggle
