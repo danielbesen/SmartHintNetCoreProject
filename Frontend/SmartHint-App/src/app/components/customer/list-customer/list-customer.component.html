@@ -16,7 +16,7 @@
   </div>
 
   <div id="accordion">
-    <div class="card">
+    <div class="card mb-2">
       <div class="card-header">
         <a
           class="d-flex btn btn-style btn-filter"
@@ -36,7 +36,9 @@
         [isAnimated]="true"
         id="filterArea"
       >
-        <div class="card-body">teste</div>
+        <div class="card-body">
+          <app-filter></app-filter>
+        </div>
       </div>
     </div>
   </div>
@@ -73,7 +75,7 @@
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
-        <td>{{ customer.date }}</td>
+        <td>{{ customer.registerDate }}</td>
         <td>{{ customer.isBlocked }}</td>
         <td>
           <button

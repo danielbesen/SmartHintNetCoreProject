@@ -7,7 +7,7 @@ namespace SmartHint.Domain.Models
         public string Type { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime? RegisterDate { get; set; }
         public string IdentityDocument { get; set; }
         public string StateRegistration { get; set; }
         public string Gender { get; set; }

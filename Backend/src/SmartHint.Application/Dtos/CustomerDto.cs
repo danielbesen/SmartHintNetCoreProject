@@ -13,7 +13,7 @@ namespace SmartHint.Application.Dtos
         public string Email { get; set; }
         [Required, MaxLength(11)]
         public string Phone { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime? RegisterDate { get; set; }
         [Required]
         public string IdentityDocument { get; set; }
         public string StateRegistration { get; set; }
