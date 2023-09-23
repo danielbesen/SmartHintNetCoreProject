@@ -13,7 +13,7 @@ export class ListCustomerComponent implements OnInit {
   public filteredCustomers: Customer[] = [];
   private _listFilter: string = '';
   private customerId: number;
-
+  isCollapsed = true;
   constructor(
     private router: Router,
     private customerService: CustomerService

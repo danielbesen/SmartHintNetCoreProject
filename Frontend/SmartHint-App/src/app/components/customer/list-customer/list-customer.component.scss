@@ -9,9 +9,18 @@ i {
   background-color: transparent;
 }
 
-.new-btn-style {
+.btn-new {
   color: #8b8b8b;
   border: 1px solid rgb(91, 168, 88);
+}
+
+.btn-filter {
+  color: #8b8b8b;
+  border: 1px solid #56b0fa;
+  text-align: right;
+}
+
+.btn-style {
   font-weight: bold;
   text-transform: capitalize;
   height: auto;
@@ -22,22 +31,28 @@ i {
 }
 
 @media (min-width: 1000px) {
-  .new-btn-style {
+  .btn-style {
     height: 70%;
+    font-size: 17px;
   }
 }
 
 @media (max-width: 1000px) {
-  .new-btn-style {
+  .btn-style {
     height: 70%;
-    font-size: 2vw;
+    font-size: 1.5vw;
   }
 }
 
-.new-btn-style:hover {
+.btn-style:hover {
   background-color: rgb(230, 230, 230);
 }
 
 .description {
   color: #6c757d;
+}
+
+.filter-icon {
+  font-size: 18px;
+  margin-right: 7px;
 }

@@ -6,11 +6,38 @@
         novos clientes
       </h3>
     </div>
-
     <div>
-      <a class="d-flex btn btn-xs new-btn-style" routerLink="/customer/detail"
+      <a
+        class="d-flex btn btn-xs btn-style btn-new"
+        routerLink="/customer/detail"
         >Adicionar Cliente</a
       >
+    </div>
+  </div>
+
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a
+          class="d-flex btn btn-style btn-filter"
+          routerLink=""
+          (click)="isCollapsed = !isCollapsed"
+          data-toggle="collapse"
+          data-target="#filterArea"
+          aria-controls="filterArea"
+          aria-expanded="false"
+          ><i class="filter-icon fa-solid fa-magnifying-glass"></i>Filtrar</a
+        >
+      </div>
+
+      <div
+        class="collapse"
+        [collapse]="isCollapsed"
+        [isAnimated]="true"
+        id="filterArea"
+      >
+        <div class="card-body">teste</div>
+      </div>
     </div>
   </div>
 
