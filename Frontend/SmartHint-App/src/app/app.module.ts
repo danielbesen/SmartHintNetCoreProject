@@ -19,6 +19,7 @@ import { CustomerComponent } from './components/customer/customer.component';
 import { ListCustomerComponent } from './components/customer/list-customer/list-customer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FilterComponent } from './components/filter/filter.component';
+import { DatePipe } from '@angular/common';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -42,7 +43,7 @@ defineLocale('pt-br', ptBrLocale);
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
   ],
-  providers: [CustomerService],
+  providers: [CustomerService, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

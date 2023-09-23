@@ -31,7 +31,7 @@
         <th>Nome/Razão Social</th>
         <th>E-mail</th>
         <th>Telefone</th>
-        <th>Cadastrado em</th>
+        <th>Data de Cadastro</th>
         <th>Bloqueado</th>
         <th>Ações</th>
       </tr>
@@ -49,7 +49,7 @@
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
-        <td>{{ customer.registerDate }}</td>
+        <td>{{ customer.registerDate | date : "dd/MM/yyyy" }}</td>
         <td>
           <input
             type="checkbox"

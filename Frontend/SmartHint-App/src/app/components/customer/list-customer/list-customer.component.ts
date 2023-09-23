@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { DataService } from 'src/app/services/data.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list-customer',
@@ -17,7 +18,8 @@ export class ListCustomerComponent implements OnInit {
   constructor(
     private router: Router,
     private customerService: CustomerService,
-    private dataService: DataService
+    private dataService: DataService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {

@@ -5,8 +5,12 @@ i {
 
 .edit-btn-style {
   border: none;
-  color: #808080;
+  color: #9b9b9b;
   background-color: transparent;
+}
+
+.edit-btn-style:hover {
+  color: #5a5a5a;
 }
 
 .btn-new {
