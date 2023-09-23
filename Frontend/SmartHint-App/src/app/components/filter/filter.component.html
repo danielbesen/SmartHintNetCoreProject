@@ -26,12 +26,24 @@
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label>Nome/Razão Social:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="name"
-                    placeholder="Nome ou Razão Social do Cliente"
-                  />
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="name"
+                      placeholder="Nome ou Razão Social do Cliente"
+                    />
+                    <div *ngIf="(f.name.value ?? null) && isFiltering">
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-danger"
+                          (click)="cleanFormField('name')"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-row">

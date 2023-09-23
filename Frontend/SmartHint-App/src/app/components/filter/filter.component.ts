@@ -15,6 +15,7 @@ export class FilterComponent implements OnInit {
   public blockTitle: string;
   form: FormGroup;
   isCollapsed = true;
+  isFiltering = false;
   constructor(
     private localeService: BsLocaleService,
     private customerService: CustomerService,
@@ -37,6 +38,7 @@ export class FilterComponent implements OnInit {
   }
 
   public applyFilter(): void {
+    this.isFiltering = true;
     let fm = {
       ...this.form.value,
       isBlocked:
@@ -59,6 +61,16 @@ export class FilterComponent implements OnInit {
   public cleanForm(): void {
     this.form.reset();
     this.blockTitle = 'Selecione uma opção';
+    this.isFiltering = false;
+  }
+
+  public cleanFormField(field: string) {
+    this.form.get(field)?.reset();
+    this.applyFilter();
+  }
+
+  get f() {
+    return this.form.controls;
   }
 
   public changeBlockTitle(value: string): void {
