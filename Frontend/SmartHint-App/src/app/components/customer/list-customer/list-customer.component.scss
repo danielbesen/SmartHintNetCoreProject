@@ -1,0 +1,47 @@
+i {
+  margin-left: 10px;
+  font-size: 25px;
+}
+
+.edit-btn-style {
+  border: none;
+  color: #808080;
+}
+
+.del-btn-style {
+  border: none;
+  color: rgb(255, 88, 88);
+}
+
+.new-btn-style {
+  color: #8b8b8b;
+  border: 1px solid rgb(91, 168, 88);
+  font-weight: bold;
+  text-transform: capitalize;
+  height: auto;
+  align-items: center;
+  margin-bottom: 2%;
+  font-size: 20px;
+  width: auto;
+}
+
+@media (min-width: 1000px) {
+  .new-btn-style {
+    height: 70%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .new-btn-style {
+    height: 70%;
+    font-size: 2vw;
+  }
+}
+
+.new-btn-style:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+.description {
+  color: #6c757d;
+}

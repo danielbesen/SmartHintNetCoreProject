@@ -9,12 +9,22 @@ import { AppComponent } from './app.component';
 import { CustomerService } from './services/customer.service';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { TitleComponent } from './shared/title/title.component';
+import { CustomerComponent } from './components/customer/customer.component';
+import { ListCustomerComponent } from './components/customer/list-customer/list-customer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, TitleComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    TitleComponent,
+    CustomerComponent,
+    ListCustomerComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     CollapseModule,
     BrowserAnimationsModule,
   ],
