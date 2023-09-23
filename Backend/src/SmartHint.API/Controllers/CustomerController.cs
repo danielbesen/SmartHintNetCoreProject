@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SmartHint.API.Extensions;
 using SmartHint.Application.Dtos;
 using SmartHint.Application.Interfaces;
 using SmartHint.Persistance.Helpers;
@@ -23,6 +24,7 @@ public class CustomerController : ControllerBase
             var customers = await _customerService.GetAllCustomersAsync(pageParams);
             if (customers == null) return NoContent();
 
+            Response.AddPagination(customers.CurrentPage, customers.PageSize, customers.TotalCount, customers.TotalPages);
             return Ok(customers);
         }
         catch (System.Exception ex)
