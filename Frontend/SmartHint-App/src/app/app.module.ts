@@ -1,29 +1,26 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { AppRoutingModule } from './app-routing.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { ToastrModule } from 'ngx-toastr';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
-
+import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { CustomerService } from './services/customer.service';
+import { CustomerComponent } from './components/customer/customer.component';
+import { DetailCustomerComponent } from './components/customer/detail-customer/detail-customer.component';
+import { ListCustomerComponent } from './components/customer/list-customer/list-customer.component';
+import { FilterComponent } from './components/filter/filter.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { TitleComponent } from './shared/title/title.component';
-import { CustomerComponent } from './components/customer/customer.component';
-import { ListCustomerComponent } from './components/customer/list-customer/list-customer.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FilterComponent } from './components/filter/filter.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ToastrModule } from 'ngx-toastr';
+import { CustomerService } from './services/customer.service';
 import { DatePipe } from '@angular/common';
-import { DetailCustomerComponent } from './components/customer/detail-customer/detail-customer.component';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
@@ -47,8 +44,7 @@ defineLocale('pt-br', ptBrLocale);
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
-    NgxMaskDirective,
-    NgxMaskPipe,
+    NgxMaskModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
@@ -56,7 +52,7 @@ defineLocale('pt-br', ptBrLocale);
       progressBar: true,
     }),
   ],
-  providers: [CustomerService, DatePipe, provideNgxMask()],
+  providers: [CustomerService, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
