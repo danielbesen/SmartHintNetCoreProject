@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./detail-customer.component.scss'],
 })
 export class DetailCustomerComponent implements OnInit {
+  public typeTitle: string;
   form: FormGroup;
   customer = {} as Customer;
   saveState: string = 'post';
@@ -22,7 +23,12 @@ export class DetailCustomerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.typeTitle = 'Selecione uma opção';
     this.validation(), this.loadCustomer();
+  }
+
+  public changeTypeTitle(value: string): void {
+    this.typeTitle = value;
   }
 
   get f(): any {
@@ -41,7 +47,7 @@ export class DetailCustomerComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.maxLength(11),
+          Validators.maxLength(14),
           Validators.pattern('^[0-9]*$'),
         ],
       ],
@@ -50,7 +56,7 @@ export class DetailCustomerComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.maxLength(14),
+          Validators.maxLength(17),
           Validators.pattern('^[0-9]*$'),
         ],
       ],

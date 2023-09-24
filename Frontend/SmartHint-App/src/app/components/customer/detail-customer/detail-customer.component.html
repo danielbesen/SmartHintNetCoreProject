@@ -28,7 +28,7 @@
             type="text"
             class="form-control"
             formControlName="registerDate"
-            [value]="form.get('registerDate').value | date : 'dd/MM/yyyy'"
+            [value]="f.registerDate.value | date : 'dd/MM/yyyy'"
           />
         </div>
       </div>
@@ -37,7 +37,49 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Tipo de Pessoa:</label>
-          <input type="text" class="form-control" formControlName="type" />
+          <input
+            class="form-control"
+            type="hidden"
+            formControlName="type"
+            name="type"
+            [value]="typeTitle"
+          />
+          <div dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-style dropdown-toggle form-control"
+              aria-controls="dropdown-basic"
+            >
+              {{ typeTitle }}<span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu dropdown-style"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a
+                  class="dropdown-item"
+                  (click)="changeTypeTitle('Selecione uma opção')"
+                  >Selecione uma opção</a
+                >
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="changeTypeTitle('Física')"
+                  >Física</a
+                >
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="changeTypeTitle('Jurídica')"
+                  >Jurídica</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label>CPF/CNPJ:</label>
@@ -45,6 +87,11 @@
             type="text"
             class="form-control"
             formControlName="identityDocument"
+            [mask]="
+              f.identityDocument.value.length < 12
+                ? '000.000.000-000'
+                : '00.000.000/0000-00'
+            "
           />
         </div>
       </div>
