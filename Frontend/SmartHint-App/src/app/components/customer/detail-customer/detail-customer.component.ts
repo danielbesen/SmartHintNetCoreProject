@@ -26,7 +26,8 @@ export class DetailCustomerComponent implements OnInit {
     private router: Router,
     private acRouter: ActivatedRoute,
     private customerService: CustomerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -50,44 +51,82 @@ export class DetailCustomerComponent implements OnInit {
     this.router.navigate([`customers/list`]);
   }
 
+  // public validation(): void {
+  //   this.form = this.fb.group({
+  //     free: new FormControl([]),
+  //     name: new FormControl([
+  //       '',
+  //       [Validators.required, Validators.maxLength(150)],
+  //     ]),
+  //     type: new FormControl(['', [Validators.required]]),
+  //     email: new FormControl([
+  //       '',
+  //       [Validators.required, Validators.email, Validators.maxLength(150)],
+  //     ]),
+  //     phone: new FormControl([
+  //       '',
+  //       [
+  //         Validators.required,
+  //         Validators.maxLength(14),
+  //         Validators.pattern('^[0-9]*$'),
+  //       ],
+  //     ]),
+  //     registerDate: new FormControl(['']),
+  //     identityDocument: new FormControl(['', [Validators.required]]),
+  //     stateRegistration: new FormControl([
+  //       '',
+  //       [Validators.maxLength(15), Validators.pattern('^[0-9]*$')],
+  //     ]),
+  //     gender: new FormControl(['']),
+  //     dateOfBirth: new FormControl(['']),
+  //     isBlocked: new FormControl(['']),
+  //     password: new FormControl([
+  //       '',
+  //       [
+  //         Validators.required,
+  //         Validators.minLength(8),
+  //         Validators.maxLength(15),
+  //       ],
+  //     ]),
+  //     passwordConfirmation: new FormControl(['', Validators.required]),
+  //   });
+  // }
+
   public validation(): void {
-    this.form = new FormGroup({
-      free: new FormControl([]),
-      name: new FormControl([
-        '',
-        [Validators.required, Validators.maxLength(150)],
-      ]),
-      type: new FormControl(['', [Validators.required]]),
-      email: new FormControl([
+    this.form = this.fb.group({
+      free: [],
+      name: ['', [Validators.required, Validators.maxLength(150)]],
+      type: ['', [Validators.required]],
+      email: [
         '',
         [Validators.required, Validators.email, Validators.maxLength(150)],
-      ]),
-      phone: new FormControl([
+      ],
+      phone: [
         '',
         [
           Validators.required,
           Validators.maxLength(14),
           Validators.pattern('^[0-9]*$'),
         ],
-      ]),
-      registerDate: new FormControl(['']),
-      identityDocument: new FormControl(['', [Validators.required]]),
-      stateRegistration: new FormControl([
+      ],
+      registerDate: [''],
+      identityDocument: ['', [Validators.required]],
+      stateRegistration: [
         '',
         [Validators.maxLength(15), Validators.pattern('^[0-9]*$')],
-      ]),
-      gender: new FormControl(['']),
-      dateOfBirth: new FormControl(['']),
-      isBlocked: new FormControl(['']),
-      password: new FormControl([
+      ],
+      gender: [''],
+      dateOfBirth: [''],
+      isBlocked: [''],
+      password: [
         '',
         [
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(15),
         ],
-      ]),
-      passwordConfirmation: new FormControl(['', Validators.required]),
+      ],
+      passwordConfirmation: ['', Validators.required],
     });
   }
 
