@@ -1,6 +1,8 @@
 <div class="card rounded shadow-sm p-3">
+  <h4 class="card-title">Área do Cliente</h4>
   <form [formGroup]="form">
-    <div class="p-3 card">
+    <div class="p-3 card card-style">
+      <h5 class="card-title"></h5>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Nome do Cliente/Razão Social:</label>
@@ -33,7 +35,8 @@
         </div>
       </div>
     </div>
-    <div class="p-3 card">
+    <div class="p-3 card card-style">
+      <h5 class="card-title">Informações Pessoais</h5>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Tipo de Pessoa:</label>
@@ -98,7 +101,56 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Gênero:</label>
-          <input type="text" class="form-control" formControlName="gender" />
+          <input
+            class="form-control"
+            type="hidden"
+            formControlName="gender"
+            name="gender"
+            [value]="genderTitle"
+          />
+          <div dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-style dropdown-toggle form-control"
+              aria-controls="dropdown-basic"
+            >
+              {{ genderTitle }}<span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu dropdown-style"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a
+                  class="dropdown-item"
+                  (click)="changeGenderTitle('Selecione uma opção')"
+                  >Selecione uma opção</a
+                >
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="changeGenderTitle('Feminino')"
+                  >Feminino</a
+                >
+              </li>
+              <li role="menuitem">
+                <a
+                  class="dropdown-item"
+                  (click)="changeGenderTitle('Masculino')"
+                  >Masculino</a
+                >
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" (click)="changeGenderTitle('Outro')"
+                  >Outro</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label>Data de Nascimento:</label>
@@ -106,6 +158,7 @@
             type="text"
             class="form-control"
             formControlName="dateOfBirth"
+            [value]="f.dateOfBirth.value | date : 'dd/MM/yyyy'"
           />
         </div>
       </div>
@@ -116,37 +169,51 @@
             type="text"
             class="form-control"
             formControlName="stateRegistration"
+            mask="000.000.000-000"
           />
         </div>
         <div class="form-group col-md-6">
           <label>Isento:</label>
-          <input type="text" class="form-control" formControlName="" />
+          <input
+            type="checkbox"
+            class="form-control check-free"
+            formControlName="free"
+          />
         </div>
       </div>
     </div>
-    <div class="p-3 card">
+    <div class="p-3 card card-style">
+      <h5 class="card-title">Situação do Cliente</h5>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label>Bloqueado checkbox</label>
+          <label>Bloqueado:</label>
           <input type="text" class="form-control" formControlName="isBlocked" />
         </div>
       </div>
     </div>
-    <div class="p-3 card">
+    <div class="p-3 card card-style">
+      <h5 class="card-title">Senha de Acesso</h5>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Senha</label>
-          <input type="text" class="form-control" formControlName="password" />
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+          />
         </div>
         <div class="form-group col-md-6">
           <label>Confirmação de Senha</label>
-          <input type="text" class="form-control" formControlName="" />
+          <input type="password" class="form-control" />
         </div>
       </div>
     </div>
     <div class="card-footer">
       <div class="d-flex">
-        <button class="btn btn-outline-secondary mr-auto border">
+        <button
+          class="btn btn-outline-secondary mr-auto border"
+          (click)="cancelOperation()"
+        >
           Cancelar Alteração
         </button>
         <button class="btn btn-success" (click)="saveCustomer()">

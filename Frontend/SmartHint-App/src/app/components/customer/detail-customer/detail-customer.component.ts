@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,11 +12,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DetailCustomerComponent implements OnInit {
   public typeTitle: string;
+  public genderTitle: string;
   form: FormGroup;
   customer = {} as Customer;
   saveState: string = 'post';
   constructor(
-    private router: ActivatedRoute,
+    private router: Router,
+    private acRouter: ActivatedRoute,
     private customerService: CustomerService,
     private fb: FormBuilder,
     private toastr: ToastrService
@@ -24,6 +26,7 @@ export class DetailCustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.typeTitle = 'Selecione uma opção';
+    this.genderTitle = 'Selecione uma opção';
     this.validation(), this.loadCustomer();
   }
 
@@ -31,12 +34,21 @@ export class DetailCustomerComponent implements OnInit {
     this.typeTitle = value;
   }
 
+  public changeGenderTitle(value: string): void {
+    this.genderTitle = value;
+  }
+
   get f(): any {
     return this.form.controls;
   }
 
+  public cancelOperation(): void {
+    this.router.navigate([`customers/list`]);
+  }
+
   public validation(): void {
     this.form = this.fb.group({
+      free: [],
       name: ['', [Validators.required, Validators.maxLength(150)]],
       type: ['', [Validators.required]],
       email: [
@@ -62,7 +74,7 @@ export class DetailCustomerComponent implements OnInit {
       ],
       stateRegistration: [
         '',
-        [Validators.maxLength(12), Validators.pattern('^[0-9]*$')],
+        [Validators.maxLength(15), Validators.pattern('^[0-9]*$')],
       ],
       gender: [''],
       dateOfBirth: [''],
@@ -79,7 +91,7 @@ export class DetailCustomerComponent implements OnInit {
   }
 
   public loadCustomer(): void {
-    const customerIdParam = this.router.snapshot.paramMap.get('id');
+    const customerIdParam = this.acRouter.snapshot.paramMap.get('id');
 
     if (customerIdParam !== null) {
       this.saveState = 'put';
@@ -87,6 +99,7 @@ export class DetailCustomerComponent implements OnInit {
       this.customerService.getCustomerById(+customerIdParam).subscribe(
         (customer: Customer) => {
           this.customer = { ...customer };
+          delete this.customer.password;
           this.form.patchValue(this.customer);
         },
         (error: any) => {
