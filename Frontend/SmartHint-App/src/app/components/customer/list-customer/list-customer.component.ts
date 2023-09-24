@@ -25,8 +25,7 @@ export class ListCustomerComponent implements OnInit {
   constructor(
     private router: Router,
     private customerService: CustomerService,
-    private dataService: DataService,
-    private datePipe: DatePipe
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +56,7 @@ export class ListCustomerComponent implements OnInit {
   }
 
   detailCustomer(id: number): void {
-    this.router.navigate([`customer/detail/${id}`]);
+    this.router.navigate([`customers/detail/${id}`]);
   }
 
   selectAll(event: Event): void {

@@ -8,6 +8,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ToastrModule } from 'ngx-toastr';
 
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
@@ -21,6 +22,7 @@ import { ListCustomerComponent } from './components/customer/list-customer/list-
 import { HttpClientModule } from '@angular/common/http';
 import { FilterComponent } from './components/filter/filter.component';
 import { DatePipe } from '@angular/common';
+import { DetailCustomerComponent } from './components/customer/detail-customer/detail-customer.component';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -32,6 +34,7 @@ defineLocale('pt-br', ptBrLocale);
     CustomerComponent,
     ListCustomerComponent,
     FilterComponent,
+    DetailCustomerComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,12 @@ defineLocale('pt-br', ptBrLocale);
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true,
+    }),
   ],
   providers: [CustomerService, DatePipe],
   bootstrap: [AppComponent],
