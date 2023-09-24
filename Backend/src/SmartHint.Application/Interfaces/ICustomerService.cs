@@ -11,5 +11,8 @@ namespace SmartHint.Application.Interfaces
         Task<PageList<CustomerDto>> GetAllCustomersAsync(PageParams pageParams);
         Task<CustomerDto> GetCustomerByIdAsync(int customerId);
         Task<PageList<CustomerFilterDto>> GetFilteredCustomersAsync(PageParams pageParams);
+        Task<CustomerDto> GetCustomerByEmailAsync(string email);
+        Task<CustomerDto> GetCustomerByIdentityDocumentAsync(string documentIdentity);
+        Task<CustomerDto> GetCustomerByStateStateRegistrationAsync(string stateRegistration);
     }
 }

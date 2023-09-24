@@ -70,6 +70,57 @@ public class CustomerController : ControllerBase
         }
     }
 
+    [HttpGet("{email}")]
+    public async Task<IActionResult> GetByEmailAsync(string email)
+    {
+        try
+        {
+            var customers = await _customerService.GetCustomerByEmailAsync(email);
+            if (customers == null) return NoContent();
+
+            return Ok(customers);
+        }
+        catch (System.Exception ex)
+        {
+            return this.StatusCode(StatusCodes.Status500InternalServerError,
+            $"Get customers by email error: {ex.Message}");
+        }
+    }
+
+    [HttpGet("{identityDocument}")]
+    public async Task<IActionResult> GetByIdentityDocumentAsync(string identityDocument)
+    {
+        try
+        {
+            var customers = await _customerService.GetCustomerByIdentityDocumentAsync(identityDocument);
+            if (customers == null) return NoContent();
+
+            return Ok(customers);
+        }
+        catch (System.Exception ex)
+        {
+            return this.StatusCode(StatusCodes.Status500InternalServerError,
+            $"Get customers by identityDocument error: {ex.Message}");
+        }
+    }
+
+    [HttpGet("{stateRegistration}")]
+    public async Task<IActionResult> GetByStateRegistrationAsync(string stateRegistration)
+    {
+        try
+        {
+            var customers = await _customerService.GetCustomerByStateStateRegistrationAsync(stateRegistration);
+            if (customers == null) return NoContent();
+
+            return Ok(customers);
+        }
+        catch (System.Exception ex)
+        {
+            return this.StatusCode(StatusCodes.Status500InternalServerError,
+            $"Get customers by StateRegistration error: {ex.Message}");
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post(CustomerDto model)
     {

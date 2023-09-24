@@ -45,5 +45,32 @@ namespace SmartHint.Persistance.Repositories
         );
             return await PageList<Customer>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
+
+        public async Task<Customer> GetCustomerByEmailAsync(string email)
+        {
+            IQueryable<Customer> query = _context.Customers;
+
+            query = query.AsNoTracking().Where(e => e.Email == email);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Customer> GetCustomerByIdentityDocumentAsync(string identityDocument)
+        {
+            IQueryable<Customer> query = _context.Customers;
+
+            query = query.AsNoTracking().Where(e => e.IdentityDocument == identityDocument);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Customer> GetCustomerByStateStateRegistrationAsync(string stateRegistration)
+        {
+            IQueryable<Customer> query = _context.Customers;
+
+            query = query.AsNoTracking().Where(e => e.StateRegistration == stateRegistration);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }
