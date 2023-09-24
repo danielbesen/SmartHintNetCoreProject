@@ -28,6 +28,7 @@
             type="text"
             class="form-control"
             formControlName="registerDate"
+            [value]="form.get('registerDate').value | date : 'dd/MM/yyyy'"
           />
         </div>
       </div>
