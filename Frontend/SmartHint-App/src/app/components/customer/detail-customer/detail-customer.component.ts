@@ -152,7 +152,7 @@ export class DetailCustomerComponent implements OnInit {
           this.toastr.success('Sucesso!', 'Cliente salvo :)');
           setTimeout(() => {
             this.router.navigate([`customers/list`]);
-          }, 5500);
+          }, 3200);
         },
         (error: any) => {
           console.error(error);
