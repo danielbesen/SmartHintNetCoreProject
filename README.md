@@ -70,7 +70,7 @@ dotnet watch run
 "https://localhost:7125/swagger/index.html"
 
 # Navigate to the SmartHint-App folder
-cd frontend/SmartHint.API
+cd frontend/SmartHint-App
 
 # Start the app
 npm start
