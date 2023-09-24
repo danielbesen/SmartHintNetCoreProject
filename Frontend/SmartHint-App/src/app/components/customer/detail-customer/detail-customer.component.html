@@ -68,12 +68,13 @@
         <div class="form-group col-md-6">
           <label>Data de Cadastro</label>
           <input
+            placeholder="DD/MM/YYYY"
             type="text"
             class="form-control"
             formControlName="registerDate"
             tooltip="Data de Cadastro"
             placement="right"
-            [value]="f.registerDate.value | date : 'dd/MM/yyyy'"
+            [value]="f.registerDate.value"
           />
         </div>
       </div>
@@ -85,7 +86,7 @@
           <label>Tipo de Pessoa:</label>
           <input
             class="form-control"
-            type="hidden"
+            type="text"
             formControlName="type"
             name="type"
             [value]="typeTitle"
@@ -196,10 +197,11 @@
           <input
             type="text"
             class="form-control"
+            placeholder="DD/MM/YYYY"
             formControlName="dateOfBirth"
             tooltip=" Data de nascimento do Cliente."
             placement="right"
-            [value]="f.dateOfBirth.value | date : 'dd/MM/yyyy'"
+            [value]="f.dateOfBirth.value"
           />
         </div>
       </div>

@@ -128,14 +128,18 @@ export class DetailCustomerComponent implements OnInit {
       this.form.controls.password.updateValueAndValidity();
       this.form.controls.passwordConfirmation.clearValidators();
       this.form.controls.passwordConfirmation.updateValueAndValidity();
-      if (
-        this.form.value.identityDocument != '' &&
-        this.form.value.identityDocument != null
-      ) {
-        this.form.controls.identityDocument.clearValidators();
-        this.form.controls.identityDocument.updateValueAndValidity();
-      }
     }
+
+    if (
+      this.form.value.identityDocument != '' &&
+      this.form.value.identityDocument != null
+    ) {
+      this.form.controls.identityDocument.clearValidators();
+      this.form.controls.identityDocument.updateValueAndValidity();
+    }
+
+    this.form.value.type = this.typeTitle;
+    this.form.controls.type.updateValueAndValidity();
 
     if (this.form.valid) {
       this.customer =
@@ -144,7 +148,12 @@ export class DetailCustomerComponent implements OnInit {
           : { id: this.customer.id, ...this.form.value };
 
       this.customerService[this.saveState](this.customer).subscribe(
-        () => this.toastr.success('Sucesso!', 'Cliente salvo :)'),
+        () => {
+          this.toastr.success('Sucesso!', 'Cliente salvo :)');
+          setTimeout(() => {
+            this.router.navigate([`customers/list`]);
+          }, 5500);
+        },
         (error: any) => {
           console.error(error);
           this.toastr.error('Erro ao salvar cliente :(');
