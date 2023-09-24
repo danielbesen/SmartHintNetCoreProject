@@ -21,7 +21,9 @@ export class DetailCustomerComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.validation(), this.loadCustomer();
+  }
 
   get f(): any {
     return this.form.controls;
