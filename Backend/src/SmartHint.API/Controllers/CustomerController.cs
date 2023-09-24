@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using SmartHint.API.Extensions;
 using SmartHint.Application.Dtos;
@@ -71,11 +72,26 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(CustomerDto model)
+    public async Task<IActionResult> Post(CustomerModelDto model)
     {
         try
         {
-            var customer = await _customerService.AddCustomer(model);
+            var newModel = new CustomerDto()
+            {
+                DateOfBirth = formatDate(model.DateOfBirth),
+                RegisterDate = formatDate(model.RegisterDate),
+                Email = model.Email,
+                Gender = model.Gender,
+                IdentityDocument = model.IdentityDocument,
+                IsBlocked = model.IsBlocked,
+                Name = model.Name,
+                Password = model.Password,
+                Phone = model.Phone,
+                StateRegistration = model.StateRegistration,
+                Type = model.Type
+            };
+
+            var customer = await _customerService.AddCustomer(newModel);
             if (customer == null) return BadRequest("Error adding new customer.");
 
             return Ok(customer);
@@ -88,11 +104,26 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, CustomerDto model)
+    public async Task<IActionResult> Put(int id, CustomerModelDto model)
     {
         try
         {
-            var customer = await _customerService.UpdateCustomer(id, model);
+            var newModel = new CustomerDto()
+            {
+                DateOfBirth = formatDate(model.DateOfBirth),
+                RegisterDate = formatDate(model.RegisterDate),
+                Email = model.Email,
+                Gender = model.Gender,
+                IdentityDocument = model.IdentityDocument,
+                IsBlocked = model.IsBlocked,
+                Name = model.Name,
+                Password = model.Password,
+                Phone = model.Phone,
+                StateRegistration = model.StateRegistration,
+                Type = model.Type
+            };
+
+            var customer = await _customerService.UpdateCustomer(id, newModel);
             if (customer == null) return BadRequest("Error updating customer.");
 
             return Ok(customer);
@@ -118,4 +149,21 @@ public class CustomerController : ControllerBase
             $"Error deleting customer: {ex.Message}");
         }
     }
+
+    public DateTime? formatDate(string date)
+    {
+        DateTime? formatedDate = null;
+
+        if (date != null && date != "null")
+        {
+            string format = "dd/MM/yyyy";
+            if (DateTime.TryParseExact(date, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDateTime))
+            {
+                formatedDate = parsedDateTime;
+            }
+            return formatedDate;
+        }
+        return formatedDate;
+    }
+
 }

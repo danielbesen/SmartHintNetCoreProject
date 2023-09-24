@@ -68,13 +68,13 @@
         <div class="form-group col-md-6">
           <label>Data de Cadastro</label>
           <input
-            placeholder="DD/MM/YYYY"
             type="text"
             class="form-control"
             formControlName="registerDate"
             tooltip="Data de Cadastro"
             placement="right"
-            [value]="f.registerDate.value"
+            bsDatepicker
+            [bsConfig]="bsConfig()"
           />
         </div>
       </div>
@@ -197,11 +197,11 @@
           <input
             type="text"
             class="form-control"
-            placeholder="DD/MM/YYYY"
             formControlName="dateOfBirth"
             tooltip=" Data de nascimento do Cliente."
             placement="right"
-            [value]="f.dateOfBirth.value"
+            bsDatepicker
+            [bsConfig]="bsConfig()"
           />
         </div>
       </div>

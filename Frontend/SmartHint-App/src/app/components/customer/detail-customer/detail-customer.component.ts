@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastrService } from 'ngx-toastr';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-detail-customer',
@@ -25,12 +26,15 @@ export class DetailCustomerComponent implements OnInit {
   customer = {} as Customer;
   saveState: string = 'post';
   constructor(
+    private localeService: BsLocaleService,
     private router: Router,
     private acRouter: ActivatedRoute,
     private customerService: CustomerService,
     private toastr: ToastrService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.localeService.use('pt-br');
+  }
 
   ngOnInit(): void {
     this.loadCustomer();
@@ -113,6 +117,12 @@ export class DetailCustomerComponent implements OnInit {
         this.typeTitle = this.customer.type;
         this.genderTitle = this.customer.gender;
         this.form.patchValue(this.customer);
+
+        const registerDateObj = new Date(this.customer.registerDate);
+        this.form.controls.registerDate.patchValue(registerDateObj);
+
+        const dateOfBirthObj = new Date(this.customer.dateOfBirth);
+        this.form.controls.dateOfBirth.patchValue(dateOfBirthObj);
       },
       (error: any) => {
         console.error(error);
@@ -147,6 +157,14 @@ export class DetailCustomerComponent implements OnInit {
           ? { ...this.form.value }
           : { id: this.customer.id, ...this.form.value };
 
+      let fm = {
+        ...this.form.value,
+      };
+
+      fm.registerDate = fm.registerDate?.toLocaleString().split(',')[0] || null;
+      fm.dateOfBirth = fm.dateOfBirth?.toLocaleString().split(',')[0] || null;
+      const customer: Customer = { ...fm };
+
       this.customerService[this.saveState](this.customer).subscribe(
         () => {
           this.toastr.success('Sucesso!', 'Cliente salvo :)');
@@ -163,5 +181,15 @@ export class DetailCustomerComponent implements OnInit {
     } else {
       this.toastr.error('Campo(s) inválidos :(');
     }
+  }
+
+  public bsConfig(): any {
+    return {
+      isAnimated: true,
+      adaptivePosition: true,
+      dateInputFormat: 'DD/MM/YYYY',
+      containerClass: 'theme-default',
+      showWeekNumbers: false,
+    };
   }
 }
