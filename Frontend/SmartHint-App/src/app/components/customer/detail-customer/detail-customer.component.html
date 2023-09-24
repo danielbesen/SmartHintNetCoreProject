@@ -88,14 +88,14 @@
             type="hidden"
             formControlName="type"
             name="type"
-            tooltip="Selecione o tipo de Pessoa."
-            placement="right"
             [value]="typeTitle"
             [ngClass]="{ 'is-invalid': f.type.errors && f.type.touched }"
           />
           <div dropdown>
             <button
               id="button-basic"
+              tooltip="Selecione o tipo de Pessoa."
+              placement="right"
               dropdownToggle
               type="button"
               class="btn btn-style dropdown-toggle form-control"
@@ -222,6 +222,7 @@
             type="checkbox"
             class="form-control check-free"
             formControlName="free"
+            [checked]="setChecked()"
           />
         </div>
       </div>
@@ -241,7 +242,7 @@
         </div>
       </div>
     </div>
-    <div class="p-3 card card-style">
+    <div class="p-3 card card-style" *ngIf="saveState == 'post'">
       <h5 class="card-title">Senha de Acesso</h5>
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -307,7 +308,7 @@
           Cancelar Alteração
         </button>
         <button class="btn btn-success" (click)="saveCustomer()">
-          Salvar Evento
+          Salvar Cliente
         </button>
       </div>
     </div>

@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DetailCustomerComponent implements OnInit {
   public typeTitle: string;
+  public disabled: boolean = false;
   public isChecked: boolean = false;
   public genderTitle: string;
   form: FormGroup;
@@ -89,6 +90,15 @@ export class DetailCustomerComponent implements OnInit {
     });
   }
 
+  public setChecked(): boolean {
+    if (
+      this.form.value.stateRegistration == null ||
+      this.form.value.stateRegistration == ''
+    ) {
+      return true;
+    } else return false;
+  }
+
   public loadCustomer(): void {
     const customerIdParam = this.acRouter.snapshot.paramMap.get('id');
 
@@ -99,6 +109,8 @@ export class DetailCustomerComponent implements OnInit {
         (customer: Customer) => {
           this.customer = { ...customer };
           this.customer.password = null;
+          this.typeTitle = this.customer.type;
+          this.genderTitle = this.customer.gender;
           this.form.patchValue(this.customer);
         },
         (error: any) => {
@@ -110,6 +122,21 @@ export class DetailCustomerComponent implements OnInit {
   }
 
   public saveCustomer(): void {
+    debugger;
+    if (this.saveState == 'put') {
+      this.form.controls.password.clearValidators();
+      this.form.controls.password.updateValueAndValidity();
+      this.form.controls.passwordConfirmation.clearValidators();
+      this.form.controls.passwordConfirmation.updateValueAndValidity();
+      if (
+        this.form.value.identityDocument != '' &&
+        this.form.value.identityDocument != null
+      ) {
+        this.form.controls.identityDocument.clearValidators();
+        this.form.controls.identityDocument.updateValueAndValidity();
+      }
+    }
+
     if (this.form.valid) {
       this.customer =
         this.saveState == 'post'
@@ -124,6 +151,8 @@ export class DetailCustomerComponent implements OnInit {
         },
         () => {}
       );
+    } else {
+      this.toastr.error('Campo(s) inválidos :(');
     }
   }
 }

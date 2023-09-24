@@ -48,8 +48,8 @@ defineLocale('pt-br', ptBrLocale);
     NgxMaskModule.forRoot(),
     TooltipModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 3000,
-      positionClass: 'toast-bottom-right',
+      timeOut: 5000,
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressBar: true,
     }),
