@@ -4,7 +4,7 @@ export interface Customer {
   type: string;
   email: string;
   phone: string;
-  registerDate?: Date;
+  registerDate?: string;
   identityDocument: string;
   stateRegistration: string;
   gender: string;

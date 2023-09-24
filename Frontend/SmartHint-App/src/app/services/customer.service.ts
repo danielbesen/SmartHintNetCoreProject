@@ -92,6 +92,28 @@ export class CustomerService {
     return this.http.get<Customer>(`${this.baseUrl}/${id}`).pipe(take(1));
   }
 
+  public getCustomerByEmail(email: string): Observable<Customer> {
+    return this.http
+      .get<Customer>(`${this.baseUrl}/email/${email}`)
+      .pipe(take(1));
+  }
+
+  public getCustomerByIdentityDocument(
+    identityDocument: string
+  ): Observable<Customer> {
+    return this.http
+      .get<Customer>(`${this.baseUrl}/identitydocument/${identityDocument}`)
+      .pipe(take(1));
+  }
+
+  public getCustomerByStateRegistration(
+    stateRegistration: string
+  ): Observable<Customer> {
+    return this.http
+      .get<Customer>(`${this.baseUrl}/stateregistration/${stateRegistration}`)
+      .pipe(take(1));
+  }
+
   public post(customer: Customer): Observable<Customer> {
     return this.http.post<Customer>(`${this.baseUrl}`, customer).pipe(take(1));
   }

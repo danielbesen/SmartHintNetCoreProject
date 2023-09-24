@@ -70,7 +70,7 @@ public class CustomerController : ControllerBase
         }
     }
 
-    [HttpGet("{email}")]
+    [HttpGet("email/{email}")]
     public async Task<IActionResult> GetByEmailAsync(string email)
     {
         try
@@ -87,7 +87,7 @@ public class CustomerController : ControllerBase
         }
     }
 
-    [HttpGet("{identityDocument}")]
+    [HttpGet("identitydocument/{identityDocument}")]
     public async Task<IActionResult> GetByIdentityDocumentAsync(string identityDocument)
     {
         try
@@ -104,7 +104,7 @@ public class CustomerController : ControllerBase
         }
     }
 
-    [HttpGet("{stateRegistration}")]
+    [HttpGet("stateregistration/{stateRegistration}")]
     public async Task<IActionResult> GetByStateRegistrationAsync(string stateRegistration)
     {
         try

@@ -51,7 +51,6 @@ export class FilterComponent implements OnInit {
   }
 
   public applyFilter(): void {
-    debugger;
     this.isFiltering = true;
     let fm = {
       ...this.form.value,
@@ -87,7 +86,6 @@ export class FilterComponent implements OnInit {
   }
 
   public cleanFormField(field: string) {
-    debugger;
     if (field == 'isBlocked') {
       this.form.get(field)?.reset();
       this.blockTitle = 'Selecione uma opção';

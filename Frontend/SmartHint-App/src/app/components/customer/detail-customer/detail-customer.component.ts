@@ -104,25 +104,24 @@ export class DetailCustomerComponent implements OnInit {
 
     if (customerIdParam !== null) {
       this.saveState = 'put';
-
-      this.customerService.getCustomerById(+customerIdParam).subscribe(
-        (customer: Customer) => {
-          this.customer = { ...customer };
-          this.customer.password = null;
-          this.typeTitle = this.customer.type;
-          this.genderTitle = this.customer.gender;
-          this.form.patchValue(this.customer);
-        },
-        (error: any) => {
-          console.error(error);
-        },
-        () => {}
-      );
     }
+
+    this.customerService.getCustomerById(+customerIdParam).subscribe(
+      (customer: Customer) => {
+        this.customer = { ...customer };
+        this.customer.password = null;
+        this.typeTitle = this.customer.type;
+        this.genderTitle = this.customer.gender;
+        this.form.patchValue(this.customer);
+      },
+      (error: any) => {
+        console.error(error);
+      },
+      () => {}
+    );
   }
 
   public saveCustomer(): void {
-    debugger;
     if (this.saveState == 'put') {
       this.form.controls.password.clearValidators();
       this.form.controls.password.updateValueAndValidity();
@@ -138,7 +137,8 @@ export class DetailCustomerComponent implements OnInit {
       this.form.controls.identityDocument.updateValueAndValidity();
     }
 
-    this.form.value.type = this.typeTitle;
+    this.form.controls.type.setValue(this.typeTitle);
+    this.form.controls.type.clearValidators();
     this.form.controls.type.updateValueAndValidity();
 
     if (this.form.valid) {
