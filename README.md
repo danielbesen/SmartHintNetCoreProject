@@ -72,10 +72,10 @@ dotnet watch run
 # Navigate to the SmartHint-App folder
 cd frontend/SmartHint-App
 
-# Start the app
+# Start the application
 npm start
 
-# The application will open in your browser
+# The application will open in your browser 
 "http://localhost:4200/"
 ```
 
