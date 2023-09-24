@@ -9,6 +9,5 @@ namespace SmartHint.Persistance.Helpers
         public string Phone { get; set; }
         public string RegisterDate { get; set; }
         public string IsBlocked { get; set; }
-
     }
 }

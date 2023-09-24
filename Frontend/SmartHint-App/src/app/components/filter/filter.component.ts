@@ -51,6 +51,7 @@ export class FilterComponent implements OnInit {
   }
 
   public applyFilter(): void {
+    debugger;
     this.isFiltering = true;
     let fm = {
       ...this.form.value,
@@ -61,7 +62,7 @@ export class FilterComponent implements OnInit {
           ? false
           : null,
     };
-    fm.registerDate = fm.registerDate || null;
+    fm.registerDate = fm.registerDate?.toLocaleString().split(',')[0] || null;
     const customer: Customer = { ...fm };
     this.customerService
       .getFilteredCustomer(

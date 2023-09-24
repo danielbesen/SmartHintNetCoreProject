@@ -121,9 +121,10 @@ namespace SmartHint.Application.Services
             try
             {
                 DateTime? formatedDate = null;
+
                 if (pageParams.RegisterDate != null && pageParams.RegisterDate != "null")
                 {
-                    string format = "yyyy-MM-dd HH:mm:ss.ffffff";
+                    string format = "dd/MM/yyyy";
                     if (DateTime.TryParseExact(pageParams.RegisterDate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDateTime))
                     {
                         formatedDate = parsedDateTime;
