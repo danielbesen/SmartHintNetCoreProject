@@ -22,6 +22,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { FooterComponent } from './shared/footer/footer.component';
 defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
@@ -33,6 +34,7 @@ defineLocale('pt-br', ptBrLocale);
     ListCustomerComponent,
     FilterComponent,
     DetailCustomerComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
