@@ -1,3 +1,4 @@
+using System.Globalization;
 using AutoMapper;
 using SmartHint.Application.Dtos;
 using SmartHint.Application.Interfaces;
@@ -79,6 +80,21 @@ namespace SmartHint.Application.Services
             }
         }
 
+        public async Task<CustomerDto> GetCustomerByIdAsync(int customerId)
+        {
+            try
+            {
+                var customer = await _customerPersist.GetCustomerByIdAsync(customerId);
+                if (customer == null) return null;
+                var result = _mapper.Map<CustomerDto>(customer);
+                return result;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<PageList<CustomerDto>> GetAllCustomersAsync(PageParams pageParams)
         {
             try
@@ -100,30 +116,32 @@ namespace SmartHint.Application.Services
             }
         }
 
-        public async Task<CustomerDto> GetCustomerByIdAsync(int customerId)
+        public async Task<PageList<CustomerFilterDto>> GetFilteredCustomersAsync(PageParams pageParams)
         {
             try
             {
-                var customer = await _customerPersist.GetCustomerByIdAsync(customerId);
-                if (customer == null) return null;
-                var result = _mapper.Map<CustomerDto>(customer);
-                return result;
-            }
-            catch (System.Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+                DateTime? formatedDate = null;
+                if (pageParams.RegisterDate != null && pageParams.RegisterDate != "null")
+                {
+                    string format = "yyyy-MM-dd HH:mm:ss.ffffff";
+                    if (DateTime.TryParseExact(pageParams.RegisterDate, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDateTime))
+                    {
+                        formatedDate = parsedDateTime;
+                    }
+                }
 
-        public async Task<PageList<CustomerDto>> GetFilteredCustomersAsync(CustomerFilterDto model, PageParams pageParams)
-        {
-            try
-            {
-                var customerPersistanceModel = _mapper.Map<Customer>(model);
+                var customerPersistanceModel = new Customer()
+                {
+                    Email = pageParams.Email == "null" ? null : pageParams.Email,
+                    IsBlocked = pageParams.IsBlocked == null ? null : pageParams.IsBlocked == "null" ? null : pageParams.IsBlocked == "true" ? true : false,
+                    Name = pageParams.Name == "null" ? null : pageParams.Name,
+                    Phone = pageParams.Phone == "null" ? null : pageParams.Phone,
+                    RegisterDate = formatedDate
+                };
 
                 var customers = await _customerPersist.GetFilteredCustomersAsync(customerPersistanceModel, pageParams);
                 if (customers == null) return null;
-                var result = _mapper.Map<PageList<CustomerDto>>(customers);
+                var result = _mapper.Map<PageList<CustomerFilterDto>>(customers);
 
                 result.CurrentPage = customers.CurrentPage;
                 result.TotalPages = customers.TotalPages;
@@ -136,16 +154,6 @@ namespace SmartHint.Application.Services
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        public Task<CustomerDto[]> GetFilteredCustomersAsync(CustomerFilterDto model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<CustomerDto[]> GetAllCustomersAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -22,8 +22,8 @@ export class CustomerService {
     let params = new HttpParams();
 
     if (page !== null && itemsPerPage !== null) {
-      params = params.append('pageNumber', page.toString());
-      params = params.append('pageSize', itemsPerPage.toString());
+      params = params.append('PageNumber', page.toString());
+      params = params.append('PageSize', itemsPerPage.toString());
     }
 
     return this.http
@@ -42,10 +42,50 @@ export class CustomerService {
       );
   }
 
-  public getFilteredCustomer(customer: Customer): Observable<Customer[]> {
+  public getFilteredCustomer(
+    customer: Customer,
+    page?: number,
+    itemsPerPage?: number
+  ): Observable<PaginatedResult<Customer[]>> {
+    const paginatedResult: PaginatedResult<Customer[]> = new PaginatedResult<
+      Customer[]
+    >();
+
+    let params = new HttpParams();
+
+    if (page !== null && itemsPerPage !== null) {
+      params = params.append('pageNumber', page?.toString());
+      params = params.append('pageSize', itemsPerPage?.toString());
+      params = params.append('name', customer.name);
+      params = params.append('email', customer.email);
+      params = params.append('phone', customer.phone);
+      params = params.append(
+        'registerDate',
+        customer.registerDate !== null ? customer.registerDate.toString() : null
+      );
+      params = params.append(
+        'isBlocked',
+        customer.isBlocked !== null ? customer.isBlocked.toString() : null
+      );
+    }
+
     return this.http
-      .post<Customer[]>(`${this.baseUrl}/filter`, customer)
-      .pipe(take(1));
+      .get<Customer[]>(`${this.baseUrl}/filter`, {
+        observe: 'response',
+        params,
+      })
+      .pipe(
+        take(1),
+        map((response) => {
+          paginatedResult.result = response.body;
+          if (response.headers.has('Pagination')) {
+            paginatedResult.pagination = JSON.parse(
+              response.headers.get('Pagination')
+            );
+          }
+          return paginatedResult;
+        })
+      );
   }
 
   public getCustomerById(id: number): Observable<Customer> {

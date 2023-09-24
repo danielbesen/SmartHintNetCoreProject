@@ -34,15 +34,16 @@ public class CustomerController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("filter")]
-    public async Task<IActionResult> GetByFilter(CustFilterPageParamsDto model)
+    public async Task<IActionResult> GetByFilter([FromQuery] PageParams pageParams)
     {
         try
         {
-            var customers = await _customerService.GetFilteredCustomersAsync(model.CustomerFilterDto, model.PageParams);
+            var customers = await _customerService.GetFilteredCustomersAsync(pageParams);
             if (customers == null) return NoContent();
 
+            Response.AddPagination(customers.CurrentPage, customers.PageSize, customers.TotalCount, customers.TotalPages);
             return Ok(customers);
         }
         catch (System.Exception ex)

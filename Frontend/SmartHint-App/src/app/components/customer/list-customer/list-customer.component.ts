@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { PaginatedResult, Pagination } from 'src/app/models/pagination';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { FilterComponent } from '../../filter/filter.component';
 
 @Component({
   selector: 'app-list-customer',
@@ -14,6 +15,8 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./list-customer.component.scss'],
 })
 export class ListCustomerComponent implements OnInit {
+  @ViewChild(FilterComponent) filterComponent: FilterComponent;
+
   public customers: Customer[] = [];
   public filteredCustomers: Customer[];
   private customerId: number;
@@ -36,7 +39,6 @@ export class ListCustomerComponent implements OnInit {
   }
 
   public updateData(data: Customer[]): void {
-    console.log(data);
     this.filteredCustomers = data;
   }
 
@@ -48,6 +50,7 @@ export class ListCustomerComponent implements OnInit {
           this.customers = response.result;
           this.filteredCustomers = response.result;
           this.pagination = response.pagination;
+          this.dataService.sharedData = this.pagination;
         },
         (error) => console.log(error)
       );
@@ -109,8 +112,11 @@ export class ListCustomerComponent implements OnInit {
   }
 
   public pageChanged(event): void {
-    debugger;
     this.pagination.currentPage = event.page;
-    this.getCustomers();
+    if (this.filterComponent.isFiltering) {
+      this.filterComponent.applyFilter();
+    } else {
+      this.getCustomers();
+    }
   }
 }

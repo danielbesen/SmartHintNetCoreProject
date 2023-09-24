@@ -1,10 +1,18 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Injectable,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { DataService } from 'src/app/services/data.service';
 import { ListCustomerComponent } from '../customer/list-customer/list-customer.component';
+import { PaginatedResult, Pagination } from 'src/app/models/pagination';
 
 @Component({
   selector: 'app-filter',
@@ -16,10 +24,15 @@ export class FilterComponent implements OnInit {
   form: FormGroup;
   isCollapsed = true;
   isFiltering = false;
+  public filterPagination: Pagination = {
+    currentPage: 1,
+    itemsPerPage: 20,
+    totalItems: 1,
+    totalPages: 1,
+  };
   constructor(
     private localeService: BsLocaleService,
     private customerService: CustomerService,
-    private fb: FormBuilder,
     private listCustomerComponent: ListCustomerComponent
   ) {
     this.localeService.use('pt-br');
@@ -50,12 +63,20 @@ export class FilterComponent implements OnInit {
     };
     fm.registerDate = fm.registerDate || null;
     const customer: Customer = { ...fm };
-    this.customerService.getFilteredCustomer(customer).subscribe(
-      (_customers: Customer[]) => {
-        this.listCustomerComponent.updateData(_customers);
-      },
-      (error) => console.error(error)
-    );
+    this.customerService
+      .getFilteredCustomer(
+        customer,
+        this.filterPagination.currentPage,
+        this.filterPagination.itemsPerPage
+      )
+      .subscribe(
+        (response: PaginatedResult<Customer[]>) => {
+          this.listCustomerComponent.updateData(response.result);
+          this.filterPagination = response.pagination;
+          this.listCustomerComponent.pagination = response.pagination;
+        },
+        (error) => console.error(error)
+      );
   }
 
   public cleanForm(): void {
@@ -65,7 +86,9 @@ export class FilterComponent implements OnInit {
   }
 
   public cleanFormField(field: string) {
+    debugger;
     if (field == 'isBlocked') {
+      this.form.get(field)?.reset();
       this.blockTitle = 'Selecione uma opção';
     } else {
       this.form.get(field)?.reset();
