@@ -157,49 +157,5 @@ namespace SmartHint.Application.Services
             }
         }
 
-        public async Task<CustomerDto> GetCustomerByEmailAsync(string email)
-        {
-            try
-            {
-                var customer = await _customerPersist.GetCustomerByEmailAsync(email);
-                if (customer == null) return null;
-                var result = _mapper.Map<CustomerDto>(customer);
-                return result;
-            }
-            catch (System.Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<CustomerDto> GetCustomerByIdentityDocumentAsync(string documentIdentity)
-        {
-            try
-            {
-                var customer = await _customerPersist.GetCustomerByIdentityDocumentAsync(documentIdentity);
-                if (customer == null) return null;
-                var result = _mapper.Map<CustomerDto>(customer);
-                return result;
-            }
-            catch (System.Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<CustomerDto> GetCustomerByStateStateRegistrationAsync(string stateRegistration)
-        {
-            try
-            {
-                var customer = await _customerPersist.GetCustomerByStateStateRegistrationAsync(stateRegistration);
-                if (customer == null) return null;
-                var result = _mapper.Map<CustomerDto>(customer);
-                return result;
-            }
-            catch (System.Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
     }
 }
