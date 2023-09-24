@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -20,14 +26,12 @@ export class DetailCustomerComponent implements OnInit {
     private router: Router,
     private acRouter: ActivatedRoute,
     private customerService: CustomerService,
-    private fb: FormBuilder,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.typeTitle = 'Selecione uma opção';
-    this.genderTitle = 'Selecione uma opção';
-    this.validation(), this.loadCustomer();
+    this.loadCustomer();
+    this.validation();
   }
 
   public changeTypeTitle(value: string): void {
@@ -47,50 +51,48 @@ export class DetailCustomerComponent implements OnInit {
   }
 
   public validation(): void {
-    this.form = this.fb.group({
-      free: [],
-      name: ['', [Validators.required, Validators.maxLength(150)]],
-      type: ['', [Validators.required]],
-      email: [
+    this.form = new FormGroup({
+      free: new FormControl([]),
+      name: new FormControl([
+        '',
+        [Validators.required, Validators.maxLength(150)],
+      ]),
+      type: new FormControl(['', [Validators.required]]),
+      email: new FormControl([
         '',
         [Validators.required, Validators.email, Validators.maxLength(150)],
-      ],
-      phone: [
+      ]),
+      phone: new FormControl([
         '',
         [
           Validators.required,
           Validators.maxLength(14),
           Validators.pattern('^[0-9]*$'),
         ],
-      ],
-      registerDate: [''],
-      identityDocument: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(17),
-          Validators.pattern('^[0-9]*$'),
-        ],
-      ],
-      stateRegistration: [
+      ]),
+      registerDate: new FormControl(['']),
+      identityDocument: new FormControl(['', [Validators.required]]),
+      stateRegistration: new FormControl([
         '',
         [Validators.maxLength(15), Validators.pattern('^[0-9]*$')],
-      ],
-      gender: [''],
-      dateOfBirth: [''],
-      isBlocked: [''],
-      password: [
+      ]),
+      gender: new FormControl(['']),
+      dateOfBirth: new FormControl(['']),
+      isBlocked: new FormControl(['']),
+      password: new FormControl([
         '',
         [
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(15),
         ],
-      ],
+      ]),
+      passwordConfirmation: new FormControl(['', Validators.required]),
     });
   }
 
   public loadCustomer(): void {
+    debugger;
     const customerIdParam = this.acRouter.snapshot.paramMap.get('id');
 
     if (customerIdParam !== null) {
@@ -98,8 +100,9 @@ export class DetailCustomerComponent implements OnInit {
 
       this.customerService.getCustomerById(+customerIdParam).subscribe(
         (customer: Customer) => {
+          debugger;
           this.customer = { ...customer };
-          delete this.customer.password;
+          this.customer.password = null;
           this.form.patchValue(this.customer);
         },
         (error: any) => {

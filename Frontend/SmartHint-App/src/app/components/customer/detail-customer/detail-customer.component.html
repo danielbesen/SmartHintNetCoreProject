@@ -6,11 +6,36 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Nome do Cliente/Razão Social:</label>
-          <input type="text" class="form-control" formControlName="name" />
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': f.name.errors && f.name.touched }"
+            formControlName="name"
+          />
+          <div *ngIf="f.name.hasError('required')" class="invalid-feedback">
+            Nome é obrigatório.
+          </div>
+          <div *ngIf="f.name.hasError('maxlength')" class="invalid-feedback">
+            O tamanho máximo é de 150 caracteres.
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label>E-Mail:</label>
-          <input type="text" class="form-control" formControlName="email" />
+          <input
+            type="text"
+            class="form-control"
+            formControlName="email"
+            [ngClass]="{ 'is-invalid': f.email.errors && f.email.touched }"
+          />
+          <div *ngIf="f.email.hasError('required')" class="invalid-feedback">
+            Email é obrigatório.
+          </div>
+          <div *ngIf="f.email.hasError('maxlength')" class="invalid-feedback">
+            O tamanho máximo é de 150 caracteres.
+          </div>
+          <div *ngIf="f.email.hasError('email')" class="invalid-feedback">
+            Insira um e-mail válido.
+          </div>
         </div>
       </div>
       <div class="form-row">
@@ -22,7 +47,17 @@
             formControlName="phone"
             placeholder="(##) ####-####"
             mask="(00) 00000-0000"
+            [ngClass]="{ 'is-invalid': f.phone.errors && f.phone.touched }"
           />
+          <div *ngIf="f.phone.hasError('required')" class="invalid-feedback">
+            Telefone é obrigatório.
+          </div>
+          <div *ngIf="f.phone.hasError('maxlength')" class="invalid-feedback">
+            O tamanho máximo é de 11 caracteres.
+          </div>
+          <div *ngIf="f.phone.hasError('pattern')" class="invalid-feedback">
+            Insira um telefone válido.
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label>Data de Cadastro</label>
@@ -46,6 +81,7 @@
             formControlName="type"
             name="type"
             [value]="typeTitle"
+            [ngClass]="{ 'is-invalid': f.type.errors && f.type.touched }"
           />
           <div dropdown>
             <button
@@ -55,7 +91,7 @@
               class="btn btn-style dropdown-toggle form-control"
               aria-controls="dropdown-basic"
             >
-              {{ typeTitle }}<span class="caret"></span>
+              Selecione uma opção {{ typeTitle }}<span class="caret"></span>
             </button>
             <ul
               id="dropdown-basic"
@@ -64,13 +100,6 @@
               role="menu"
               aria-labelledby="button-basic"
             >
-              <li role="menuitem">
-                <a
-                  class="dropdown-item"
-                  (click)="changeTypeTitle('Selecione uma opção')"
-                  >Selecione uma opção</a
-                >
-              </li>
               <li role="menuitem">
                 <a class="dropdown-item" (click)="changeTypeTitle('Física')"
                   >Física</a
@@ -83,6 +112,9 @@
               </li>
             </ul>
           </div>
+          <div *ngIf="f.type.hasError('required')" class="invalid-feedback">
+            Tipo de pessoa é obrigatório.
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label>CPF/CNPJ:</label>
@@ -91,7 +123,7 @@
             class="form-control"
             formControlName="identityDocument"
             [mask]="
-              f.identityDocument.value.length < 12
+              f.identityDocument?.value?.length === 11
                 ? '000.000.000-000'
                 : '00.000.000/0000-00'
             "
@@ -164,7 +196,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label> Inscrição Estadual:</label>
+          <label>Inscrição Estadual:</label>
           <input
             type="text"
             class="form-control"
@@ -200,11 +232,49 @@
             type="password"
             class="form-control"
             formControlName="password"
+            [ngClass]="{
+              'is-invalid': f.password.errors && f.password.touched
+            }"
           />
+          <div *ngIf="f.password.hasError('required')" class="invalid-feedback">
+            Senha é obrigatória.
+          </div>
+          <div
+            *ngIf="f.password.hasError('minlength')"
+            class="invalid-feedback"
+          >
+            O tamanho mínimo de caracteres é de 8.
+          </div>
+          <div
+            *ngIf="f.password.hasError('maxlength')"
+            class="invalid-feedback"
+          >
+            O tamanho máximo de caracteres é de 15.
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label>Confirmação de Senha</label>
-          <input type="password" class="form-control" />
+          <input
+            type="password"
+            class="form-control"
+            formControlName="passwordConfirmation"
+            [ngClass]="{
+              'is-invalid':
+                f.passwordConfirmation.errors && f.passwordConfirmation.touched
+            }"
+          />
+          <div
+            *ngIf="f.passwordConfirmation.hasError('required')"
+            class="invalid-feedback"
+          >
+            A confirmação de senha é obrigatória.
+          </div>
+          <div
+            *ngIf="f.password.value !== f.passwordConfirmation.value"
+            class="text-danger"
+          >
+            As senhas não coincidem.
+          </div>
         </div>
       </div>
     </div>
