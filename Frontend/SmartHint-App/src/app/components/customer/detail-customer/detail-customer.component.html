@@ -11,6 +11,8 @@
             class="form-control"
             [ngClass]="{ 'is-invalid': f.name.errors && f.name.touched }"
             formControlName="name"
+            tooltip="Nome completo ou Razão Social do Cliente."
+            placement="right"
           />
           <div *ngIf="f.name.hasError('required')" class="invalid-feedback">
             Nome é obrigatório.
@@ -25,6 +27,8 @@
             type="text"
             class="form-control"
             formControlName="email"
+            tooltip="E-mail do Cliente."
+            placement="right"
             [ngClass]="{ 'is-invalid': f.email.errors && f.email.touched }"
           />
           <div *ngIf="f.email.hasError('required')" class="invalid-feedback">
@@ -47,6 +51,8 @@
             formControlName="phone"
             placeholder="(##) ####-####"
             mask="(00) 00000-0000"
+            tooltip="Telefone do Cliente."
+            placement="right"
             [ngClass]="{ 'is-invalid': f.phone.errors && f.phone.touched }"
           />
           <div *ngIf="f.phone.hasError('required')" class="invalid-feedback">
@@ -65,6 +71,8 @@
             type="text"
             class="form-control"
             formControlName="registerDate"
+            tooltip="Data de Cadastro"
+            placement="right"
             [value]="f.registerDate.value | date : 'dd/MM/yyyy'"
           />
         </div>
@@ -80,6 +88,8 @@
             type="hidden"
             formControlName="type"
             name="type"
+            tooltip="Selecione o tipo de Pessoa."
+            placement="right"
             [value]="typeTitle"
             [ngClass]="{ 'is-invalid': f.type.errors && f.type.touched }"
           />
@@ -91,7 +101,7 @@
               class="btn btn-style dropdown-toggle form-control"
               aria-controls="dropdown-basic"
             >
-              Selecione uma opção {{ typeTitle }}<span class="caret"></span>
+              {{ typeTitle }}<span class="caret"></span>
             </button>
             <ul
               id="dropdown-basic"
@@ -122,6 +132,8 @@
             type="text"
             class="form-control"
             formControlName="identityDocument"
+            tooltip=" Insira o CPF ou o CNPJ do Cliente."
+            placement="right"
             [mask]="
               f.identityDocument?.value?.length === 11
                 ? '000.000.000-000'
@@ -130,7 +142,7 @@
           />
         </div>
       </div>
-      <div class="form-row">
+      <div *ngIf="typeTitle !== 'Jurídica'" class="form-row">
         <div class="form-group col-md-6">
           <label>Gênero:</label>
           <input
@@ -138,6 +150,8 @@
             type="hidden"
             formControlName="gender"
             name="gender"
+            tooltip="Selecione o gênero do Cliente."
+            placement="right"
             [value]="genderTitle"
           />
           <div dropdown>
@@ -157,13 +171,6 @@
               role="menu"
               aria-labelledby="button-basic"
             >
-              <li role="menuitem">
-                <a
-                  class="dropdown-item"
-                  (click)="changeGenderTitle('Selecione uma opção')"
-                  >Selecione uma opção</a
-                >
-              </li>
               <li role="menuitem">
                 <a class="dropdown-item" (click)="changeGenderTitle('Feminino')"
                   >Feminino</a
@@ -190,6 +197,8 @@
             type="text"
             class="form-control"
             formControlName="dateOfBirth"
+            tooltip=" Data de nascimento do Cliente."
+            placement="right"
             [value]="f.dateOfBirth.value | date : 'dd/MM/yyyy'"
           />
         </div>
@@ -201,7 +210,10 @@
             type="text"
             class="form-control"
             formControlName="stateRegistration"
+            tooltip="Inscrição Estadual do Cliente, selecionar Isento caso assim for."
+            placement="right"
             mask="000.000.000-000"
+            [readOnly]="f.free.value"
           />
         </div>
         <div class="form-group col-md-6">
@@ -219,7 +231,13 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label>Bloqueado:</label>
-          <input type="text" class="form-control" formControlName="isBlocked" />
+          <input
+            tooltip="Bloqueia o acesso do Cliente na sua Loja."
+            placement="right"
+            type="checkbox"
+            class="form-control check-free"
+            formControlName="isBlocked"
+          />
         </div>
       </div>
     </div>
@@ -230,6 +248,8 @@
           <label>Senha</label>
           <input
             type="password"
+            tooltip="Cadastre a senha de acesso do seu Cliente;"
+            placement="right"
             class="form-control"
             formControlName="password"
             [ngClass]="{

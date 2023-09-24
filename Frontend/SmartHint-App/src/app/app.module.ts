@@ -21,6 +21,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
@@ -45,6 +46,7 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     NgxMaskModule.forRoot(),
+    TooltipModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',

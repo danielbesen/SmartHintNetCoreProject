@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DetailCustomerComponent implements OnInit {
   public typeTitle: string;
+  public isChecked: boolean = false;
   public genderTitle: string;
   form: FormGroup;
   customer = {} as Customer;
@@ -34,7 +35,6 @@ export class DetailCustomerComponent implements OnInit {
     this.loadCustomer();
     this.validation();
   }
-
   public changeTypeTitle(value: string): void {
     this.typeTitle = value;
   }
@@ -50,47 +50,6 @@ export class DetailCustomerComponent implements OnInit {
   public cancelOperation(): void {
     this.router.navigate([`customers/list`]);
   }
-
-  // public validation(): void {
-  //   this.form = this.fb.group({
-  //     free: new FormControl([]),
-  //     name: new FormControl([
-  //       '',
-  //       [Validators.required, Validators.maxLength(150)],
-  //     ]),
-  //     type: new FormControl(['', [Validators.required]]),
-  //     email: new FormControl([
-  //       '',
-  //       [Validators.required, Validators.email, Validators.maxLength(150)],
-  //     ]),
-  //     phone: new FormControl([
-  //       '',
-  //       [
-  //         Validators.required,
-  //         Validators.maxLength(14),
-  //         Validators.pattern('^[0-9]*$'),
-  //       ],
-  //     ]),
-  //     registerDate: new FormControl(['']),
-  //     identityDocument: new FormControl(['', [Validators.required]]),
-  //     stateRegistration: new FormControl([
-  //       '',
-  //       [Validators.maxLength(15), Validators.pattern('^[0-9]*$')],
-  //     ]),
-  //     gender: new FormControl(['']),
-  //     dateOfBirth: new FormControl(['']),
-  //     isBlocked: new FormControl(['']),
-  //     password: new FormControl([
-  //       '',
-  //       [
-  //         Validators.required,
-  //         Validators.minLength(8),
-  //         Validators.maxLength(15),
-  //       ],
-  //     ]),
-  //     passwordConfirmation: new FormControl(['', Validators.required]),
-  //   });
-  // }
 
   public validation(): void {
     this.form = this.fb.group({
@@ -131,7 +90,6 @@ export class DetailCustomerComponent implements OnInit {
   }
 
   public loadCustomer(): void {
-    debugger;
     const customerIdParam = this.acRouter.snapshot.paramMap.get('id');
 
     if (customerIdParam !== null) {
@@ -139,7 +97,6 @@ export class DetailCustomerComponent implements OnInit {
 
       this.customerService.getCustomerById(+customerIdParam).subscribe(
         (customer: Customer) => {
-          debugger;
           this.customer = { ...customer };
           this.customer.password = null;
           this.form.patchValue(this.customer);
