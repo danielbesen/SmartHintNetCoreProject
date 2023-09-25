@@ -1,6 +1,6 @@
-using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using SmartHint.API.Extensions;
+using SmartHint.API.Helpers;
 using SmartHint.Application.Dtos;
 using SmartHint.Application.Interfaces;
 using SmartHint.Persistance.Helpers;
@@ -78,8 +78,8 @@ public class CustomerController : ControllerBase
         {
             var newModel = new CustomerDto()
             {
-                DateOfBirth = formatDate(model.DateOfBirth),
-                RegisterDate = formatDate(model.RegisterDate),
+                DateOfBirth = Functions.formatDate(model.DateOfBirth),
+                RegisterDate = Functions.formatDate(model.RegisterDate),
                 Email = model.Email,
                 Gender = model.Gender,
                 IdentityDocument = model.IdentityDocument,
@@ -110,8 +110,8 @@ public class CustomerController : ControllerBase
         {
             var newModel = new CustomerDto()
             {
-                DateOfBirth = formatDate(model.DateOfBirth),
-                RegisterDate = formatDate(model.RegisterDate),
+                DateOfBirth = Functions.formatDate(model.DateOfBirth),
+                RegisterDate = Functions.formatDate(model.RegisterDate),
                 Email = model.Email,
                 Gender = model.Gender,
                 IdentityDocument = model.IdentityDocument,
@@ -148,22 +148,6 @@ public class CustomerController : ControllerBase
             return this.StatusCode(StatusCodes.Status500InternalServerError,
             $"Error deleting customer: {ex.Message}");
         }
-    }
-
-    public DateTime? formatDate(string date)
-    {
-        DateTime? formatedDate = null;
-
-        if (date != null && date != "null")
-        {
-            string format = "dd/MM/yyyy";
-            if (DateTime.TryParseExact(date, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDateTime))
-            {
-                formatedDate = parsedDateTime;
-            }
-            return formatedDate;
-        }
-        return formatedDate;
     }
 
 }
