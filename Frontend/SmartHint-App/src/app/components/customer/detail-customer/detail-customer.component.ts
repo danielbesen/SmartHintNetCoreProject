@@ -152,20 +152,18 @@ export class DetailCustomerComponent implements OnInit {
     this.form.controls.type.updateValueAndValidity();
 
     if (this.form.valid) {
-      this.customer =
+      let fm =
         this.saveState == 'post'
           ? { ...this.form.value }
           : { id: this.customer.id, ...this.form.value };
 
-      let fm = {
-        ...this.form.value,
-      };
-
       fm.registerDate = fm.registerDate?.toLocaleString().split(',')[0] || null;
       fm.dateOfBirth = fm.dateOfBirth?.toLocaleString().split(',')[0] || null;
+      fm.gender = this.genderTitle;
+
       const customer: Customer = { ...fm };
 
-      this.customerService[this.saveState](this.customer).subscribe(
+      this.customerService[this.saveState](customer).subscribe(
         () => {
           this.toastr.success('Sucesso!', 'Cliente salvo :)');
           setTimeout(() => {
